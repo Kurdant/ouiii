@@ -1,0 +1,234 @@
+<mxfile host="app.diagrams.net" modified="2026-05-06T12:00:00.000Z" agent="drawio-agent" version="24.2.5" etag="MCT_Wacdo" type="device">
+  <diagram id="MCT_Wacdo" name="MCT Wacdo Bloc 2">
+    <mxGraphModel dx="1600" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- ========== TITRE ========== -->
+        <mxCell id="title" value="&lt;b&gt;MCT - Back-office Wacdo Bloc 2&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=22;fontStyle=1;fontColor=#263238;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1520" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="subtitle" value="Acteur / source -&amp;gt; Evenement -&amp;gt; Traitement metier -&amp;gt; Resultat ou refus" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="40" y="48" width="1520" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== ENTETES DE COLONNES ========== -->
+        <mxCell id="hdr_actors" value="ACTEURS / SOURCES" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="45" y="78" width="185" height="34" as="geometry"/>
+        </mxCell>
+        <mxCell id="hdr_treatments" value="EVENEMENTS ET TRAITEMENTS METIER" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="275" y="78" width="790" height="34" as="geometry"/>
+        </mxCell>
+        <mxCell id="hdr_results" value="RESULTATS / REFUS" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="78" width="330" height="34" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== BANDES DE FAMILLES ========== -->
+        <mxCell id="band_acces" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f7fbfe;strokeColor=#d6eaf8;" vertex="1" parent="1">
+          <mxGeometry x="250" y="120" width="1285" height="84" as="geometry"/>
+        </mxCell>
+        <mxCell id="label_acces" value="Acces" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontStyle=1;fontColor=#01579b;" vertex="1" parent="1">
+          <mxGeometry x="260" y="123" width="140" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="band_admin" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fffaf2;strokeColor=#ffe0b2;" vertex="1" parent="1">
+          <mxGeometry x="250" y="220" width="1285" height="160" as="geometry"/>
+        </mxCell>
+        <mxCell id="label_admin" value="Administration" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontStyle=1;fontColor=#e65100;" vertex="1" parent="1">
+          <mxGeometry x="260" y="223" width="140" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="band_api" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f7fbf7;strokeColor=#c8e6c9;" vertex="1" parent="1">
+          <mxGeometry x="250" y="410" width="1285" height="160" as="geometry"/>
+        </mxCell>
+        <mxCell id="label_api" value="API / catalogue" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontStyle=1;fontColor=#2e7d32;" vertex="1" parent="1">
+          <mxGeometry x="260" y="413" width="140" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="band_commandes" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fafafa;strokeColor=#e0e0e0;" vertex="1" parent="1">
+          <mxGeometry x="250" y="600" width="1285" height="350" as="geometry"/>
+        </mxCell>
+        <mxCell id="label_commandes" value="Commandes" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontStyle=1;fontColor=#455a64;" vertex="1" parent="1">
+          <mxGeometry x="260" y="603" width="140" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== ACTEURS ========== -->
+        <mxCell id="actor_utilisateur" value="Utilisateur interne" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1f5fe;strokeColor=#01579b;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="140" width="150" height="52" as="geometry"/>
+        </mxCell>
+        <mxCell id="actor_administration" value="Administration" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1f5fe;strokeColor=#01579b;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="278" width="150" height="52" as="geometry"/>
+        </mxCell>
+        <mxCell id="actor_systeme_externe" value="Systeme externe" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1f5fe;strokeColor=#01579b;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="465" width="150" height="52" as="geometry"/>
+        </mxCell>
+        <mxCell id="actor_accueil" value="Accueil" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1f5fe;strokeColor=#01579b;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="640" width="150" height="52" as="geometry"/>
+        </mxCell>
+        <mxCell id="actor_preparation" value="Preparation" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1f5fe;strokeColor=#01579b;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="776" width="150" height="52" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== EVENEMENTS ========== -->
+        <mxCell id="event_01" value="&lt;b&gt;Evenement&lt;/b&gt;&lt;br&gt;demande connexion" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#9e9e9e;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="275" y="135" width="220" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="event_02" value="&lt;b&gt;Evenement&lt;/b&gt;&lt;br&gt;creation / modification&lt;br&gt;catalogue" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#9e9e9e;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="275" y="235" width="220" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="event_03" value="&lt;b&gt;Evenement&lt;/b&gt;&lt;br&gt;creation / modification&lt;br&gt;compte" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#9e9e9e;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="275" y="315" width="220" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="event_04" value="&lt;b&gt;Evenement&lt;/b&gt;&lt;br&gt;demande catalogue" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#9e9e9e;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="275" y="425" width="220" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="event_05" value="&lt;b&gt;Evenement&lt;/b&gt;&lt;br&gt;commande transmise" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#9e9e9e;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="275" y="505" width="220" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="event_06" value="&lt;b&gt;Evenement&lt;/b&gt;&lt;br&gt;commande saisie&lt;br&gt;&lt;font color=&quot;#666666&quot;&gt;Accueil ou Administration&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#9e9e9e;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="275" y="615" width="220" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="event_07" value="&lt;b&gt;Evenement&lt;/b&gt;&lt;br&gt;consultation demandee&lt;br&gt;&lt;font color=&quot;#666666&quot;&gt;Preparation ou Administration&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#9e9e9e;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="275" y="700" width="220" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="event_08" value="&lt;b&gt;Evenement&lt;/b&gt;&lt;br&gt;commande terminee&lt;br&gt;&lt;font color=&quot;#666666&quot;&gt;Preparation ou Administration&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#9e9e9e;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="275" y="785" width="220" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="event_09" value="&lt;b&gt;Evenement&lt;/b&gt;&lt;br&gt;remise client&lt;br&gt;&lt;font color=&quot;#666666&quot;&gt;Accueil ou Administration&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#9e9e9e;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="275" y="870" width="220" height="64" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== TRAITEMENTS ========== -->
+        <mxCell id="process_01" value="&lt;b&gt;MCT-01 - Authentifier utilisateur&lt;/b&gt;&lt;br&gt;Identite - role - session" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#455a64;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="535" y="135" width="530" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="process_02" value="&lt;b&gt;MCT-02 - Gerer catalogue&lt;/b&gt;&lt;br&gt;Droits - coherence - trace" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#455a64;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="535" y="235" width="530" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="process_03" value="&lt;b&gt;MCT-03 - Gerer comptes utilisateurs&lt;/b&gt;&lt;br&gt;Identifiant - role - trace" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#455a64;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="535" y="315" width="530" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="process_04" value="&lt;b&gt;MCT-04 - Consulter catalogue commandable&lt;/b&gt;&lt;br&gt;Filtrer - options - disponibilite" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#455a64;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="535" y="425" width="530" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="process_05" value="&lt;b&gt;MCT-05 - Recevoir commande externe&lt;/b&gt;&lt;br&gt;Controler - recalculer - figer" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#455a64;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="535" y="505" width="530" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="process_06" value="&lt;b&gt;MCT-06 - Saisir commande back-office&lt;/b&gt;&lt;br&gt;Verifier - recalculer - figer" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#455a64;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="535" y="615" width="530" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="process_07" value="&lt;b&gt;MCT-07 - Consulter commandes a preparer&lt;/b&gt;&lt;br&gt;Recuperer - trier - afficher" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#455a64;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="535" y="700" width="530" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="process_08" value="&lt;b&gt;MCT-08 - Declarer commande preparee&lt;/b&gt;&lt;br&gt;Droit - statut - trace" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#455a64;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="535" y="785" width="530" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="process_09" value="&lt;b&gt;MCT-09 - Declarer commande livree&lt;/b&gt;&lt;br&gt;Rechercher - verifier - tracer" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#455a64;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="535" y="870" width="530" height="64" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== RESULTATS ========== -->
+        <mxCell id="result_01" value="&lt;b&gt;Acces autorise&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#b71c1c&quot;&gt;ou acces refuse&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="135" width="330" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="result_02" value="&lt;b&gt;Catalogue mis a jour&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#b71c1c&quot;&gt;ou refus&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="235" width="330" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="result_03" value="&lt;b&gt;Compte mis a jour / créé / désactivé&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#b71c1c&quot;&gt;ou refus&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="315" width="330" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="result_04" value="&lt;b&gt;Catalogue retourne&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#666666&quot;&gt;hors elements non commandables&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="425" width="330" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="result_05" value="&lt;b&gt;Commande a_preparer&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#b71c1c&quot;&gt;ou refus&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="505" width="330" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="result_06" value="&lt;b&gt;Commande a_preparer&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#b71c1c&quot;&gt;ou refus&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="615" width="330" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="result_07" value="&lt;b&gt;Liste a preparer&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#b71c1c&quot;&gt;ou refus droit&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="700" width="330" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="result_08" value="&lt;b&gt;Commande preparee&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#b71c1c&quot;&gt;ou refus&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="785" width="330" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="result_09" value="&lt;b&gt;Commande livree&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#b71c1c&quot;&gt;ou refus&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="870" width="330" height="64" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== NOTES ET LEGENDE ========== -->
+        <mxCell id="legend" value="&lt;b&gt;Legende&lt;/b&gt;&lt;br&gt;Bleu : acteur/source | Gris : evenement | Blanc : traitement metier | Vert : resultat ou refus&lt;br&gt;Les fleches indiquent le flux conceptuel, sans detail technique." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;fontFamily=Helvetica;fontSize=10;fontColor=#424242;" vertex="1" parent="1">
+          <mxGeometry x="45" y="990" width="900" height="64" as="geometry"/>
+        </mxCell>
+        <mxCell id="note_cycle" value="&lt;b&gt;Cycle commande&lt;/b&gt;&lt;br&gt;a_preparer -&amp;gt; preparee -&amp;gt; livree" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=8;spacingLeft=8;fillColor=#fff9c4;strokeColor=#d4a300;fontFamily=Helvetica;fontSize=11;fontColor=#424242;" vertex="1" parent="1">
+          <mxGeometry x="985" y="990" width="525" height="64" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== FLUX ACTEUR VERS EVENEMENT ========== -->
+        <mxCell id="edge_actor_01" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="actor_utilisateur" target="event_01">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_actor_02" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="actor_administration" target="event_02">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_actor_03" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="actor_administration" target="event_03">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_actor_04" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="actor_systeme_externe" target="event_04">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_actor_05" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="actor_systeme_externe" target="event_05">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_actor_06" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="actor_accueil" target="event_06">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_actor_07" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="actor_preparation" target="event_07">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_actor_08" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="actor_preparation" target="event_08">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_actor_09" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="actor_accueil" target="event_09">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_actor_06_admin" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;dashed=1;" edge="1" parent="1" source="actor_administration" target="event_06">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_actor_07_admin" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;dashed=1;" edge="1" parent="1" source="actor_administration" target="event_07">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_actor_08_admin" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;dashed=1;" edge="1" parent="1" source="actor_administration" target="event_08">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_actor_09_admin" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;dashed=1;" edge="1" parent="1" source="actor_administration" target="event_09">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== FLUX EVENEMENT VERS TRAITEMENT ========== -->
+        <mxCell id="edge_event_01" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="event_01" target="process_01"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge_event_02" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="event_02" target="process_02"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge_event_03" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="event_03" target="process_03"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge_event_04" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="event_04" target="process_04"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge_event_05" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="event_05" target="process_05"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge_event_06" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="event_06" target="process_06"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge_event_07" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="event_07" target="process_07"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge_event_08" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="event_08" target="process_08"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge_event_09" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="event_09" target="process_09"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- ========== FLUX TRAITEMENT VERS RESULTAT ========== -->
+        <mxCell id="edge_result_01" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="process_01" target="result_01"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge_result_02" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="process_02" target="result_02"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge_result_03" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="process_03" target="result_03"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge_result_04" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="process_04" target="result_04"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge_result_05" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="process_05" target="result_05"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge_result_06" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="process_06" target="result_06"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge_result_07" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="process_07" target="result_07"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge_result_08" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="process_08" target="result_08"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="edge_result_09" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="process_09" target="result_09"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

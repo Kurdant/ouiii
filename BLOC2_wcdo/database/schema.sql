@@ -1,0 +1,2 @@
+-- PostgreSQL schema for Wacdo Bloc 2.
+-- This file will contain the executable DDL for the application database.

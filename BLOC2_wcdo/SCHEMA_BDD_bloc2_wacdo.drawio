@@ -1,0 +1,134 @@
+<mxfile host="app.diagrams.net" modified="2026-05-06T00:00:00.000Z" agent="github-copilot" version="24.2.5" etag="SCHEMA_BDD_Wacdo_MPD" type="device">
+  <diagram id="SCHEMA_BDD_Wacdo" name="Schema BDD MPD Wacdo">
+    <mxGraphModel dx="2200" dy="1450" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1450" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="&lt;b&gt;Schema relationnel / MPD PostgreSQL - Bloc 2 Wacdo&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=22;fontStyle=1;fontColor=#172033;" vertex="1" parent="1">
+          <mxGeometry x="520" y="25" width="1160" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="group_access" value="&lt;b&gt;ACCES&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#edf6ff;strokeColor=#7aa7d9;dashed=1;dashPattern=6 4;align=left;verticalAlign=top;spacingLeft=12;spacingTop=10;fontFamily=Helvetica;fontSize=14;fontStyle=1;fontColor=#1f4e79;" vertex="1" parent="1">
+          <mxGeometry x="40" y="90" width="360" height="620" as="geometry"/>
+        </mxCell>
+        <mxCell id="group_catalogue" value="&lt;b&gt;CATALOGUE&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#d99a5b;dashed=1;dashPattern=6 4;align=left;verticalAlign=top;spacingLeft=12;spacingTop=10;fontFamily=Helvetica;fontSize=14;fontStyle=1;fontColor=#8a4b13;" vertex="1" parent="1">
+          <mxGeometry x="440" y="90" width="780" height="930" as="geometry"/>
+        </mxCell>
+        <mxCell id="group_commandes" value="&lt;b&gt;COMMANDES&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef8f0;strokeColor=#7bb283;dashed=1;dashPattern=6 4;align=left;verticalAlign=top;spacingLeft=12;spacingTop=10;fontFamily=Helvetica;fontSize=14;fontStyle=1;fontColor=#2f6b3b;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="90" width="560" height="1020" as="geometry"/>
+        </mxCell>
+        <mxCell id="group_audit" value="&lt;b&gt;AUDIT&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f7f1fb;strokeColor=#a98bc5;dashed=1;dashPattern=6 4;align=left;verticalAlign=top;spacingLeft=12;spacingTop=10;fontFamily=Helvetica;fontSize=14;fontStyle=1;fontColor=#624080;" vertex="1" parent="1">
+          <mxGeometry x="40" y="740" width="360" height="300" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="roles" value="&lt;b&gt;roles&lt;/b&gt;&lt;hr&gt;PK id_role SERIAL&lt;br&gt;libelle VARCHAR(50) UNIQUE NOT NULL&lt;br&gt;description VARCHAR(255) NULL" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dceeff;strokeColor=#2f6fa3;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;fontFamily=Helvetica;fontSize=11;fontColor=#172033;" vertex="1" parent="1">
+          <mxGeometry x="70" y="145" width="300" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="utilisateurs" value="&lt;b&gt;utilisateurs&lt;/b&gt;&lt;hr&gt;PK id_utilisateur SERIAL&lt;br&gt;FK id_role INT NOT NULL&lt;br&gt;identifiant VARCHAR(100) UNIQUE NOT NULL&lt;br&gt;mot_de_passe_hash VARCHAR(255) NOT NULL&lt;br&gt;nom VARCHAR(100) NOT NULL&lt;br&gt;prenom VARCHAR(100) NOT NULL&lt;br&gt;actif BOOLEAN DEFAULT true&lt;br&gt;date_creation TIMESTAMP NOT NULL&lt;br&gt;date_modification TIMESTAMP NULL" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dceeff;strokeColor=#2f6fa3;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;fontFamily=Helvetica;fontSize=11;fontColor=#172033;" vertex="1" parent="1">
+          <mxGeometry x="70" y="320" width="300" height="285" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="categories" value="&lt;b&gt;categories&lt;/b&gt;&lt;hr&gt;PK id_categorie SERIAL&lt;br&gt;nom VARCHAR(100) UNIQUE NOT NULL&lt;br&gt;description TEXT NULL&lt;br&gt;actif BOOLEAN DEFAULT true" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffead6;strokeColor=#c56f1a;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;fontFamily=Helvetica;fontSize=11;fontColor=#172033;" vertex="1" parent="1">
+          <mxGeometry x="470" y="145" width="320" height="125" as="geometry"/>
+        </mxCell>
+        <mxCell id="produits" value="&lt;b&gt;produits&lt;/b&gt;&lt;hr&gt;PK id_produit SERIAL&lt;br&gt;FK id_categorie INT NOT NULL&lt;br&gt;nom VARCHAR(150) NOT NULL&lt;br&gt;description TEXT NOT NULL&lt;br&gt;prix NUMERIC(10,2) CHECK prix &amp;gt;= 0&lt;br&gt;image VARCHAR(255) NOT NULL&lt;br&gt;disponible BOOLEAN DEFAULT true&lt;br&gt;actif BOOLEAN DEFAULT true&lt;br&gt;date_creation TIMESTAMP NOT NULL&lt;br&gt;date_modification TIMESTAMP NULL" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffead6;strokeColor=#c56f1a;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;fontFamily=Helvetica;fontSize=11;fontColor=#172033;" vertex="1" parent="1">
+          <mxGeometry x="470" y="335" width="320" height="305" as="geometry"/>
+        </mxCell>
+        <mxCell id="menus" value="&lt;b&gt;menus&lt;/b&gt;&lt;hr&gt;PK id_menu SERIAL&lt;br&gt;nom VARCHAR(150) NOT NULL&lt;br&gt;description TEXT NOT NULL&lt;br&gt;prix NUMERIC(10,2) CHECK prix &amp;gt;= 0&lt;br&gt;image VARCHAR(255) NOT NULL&lt;br&gt;disponible BOOLEAN DEFAULT true&lt;br&gt;actif BOOLEAN DEFAULT true&lt;br&gt;date_creation TIMESTAMP NOT NULL&lt;br&gt;date_modification TIMESTAMP NULL" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff0c8;strokeColor=#b7791f;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;fontFamily=Helvetica;fontSize=11;fontColor=#172033;" vertex="1" parent="1">
+          <mxGeometry x="860" y="145" width="320" height="285" as="geometry"/>
+        </mxCell>
+        <mxCell id="sections_menu" value="&lt;b&gt;sections_menu&lt;/b&gt;&lt;hr&gt;PK id_section_menu SERIAL&lt;br&gt;FK id_menu INT NOT NULL&lt;br&gt;nom VARCHAR(100) NOT NULL&lt;br&gt;obligatoire BOOLEAN DEFAULT true&lt;br&gt;quantite_min INTEGER DEFAULT 1&lt;br&gt;quantite_max INTEGER DEFAULT 1&lt;br&gt;CHECK quantite_min &amp;gt;= 0&lt;br&gt;CHECK quantite_max &amp;gt;= quantite_min" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff0c8;strokeColor=#b7791f;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;fontFamily=Helvetica;fontSize=11;fontColor=#172033;" vertex="1" parent="1">
+          <mxGeometry x="860" y="500" width="320" height="225" as="geometry"/>
+        </mxCell>
+        <mxCell id="options_menu" value="&lt;b&gt;options_menu&lt;/b&gt;&lt;hr&gt;PK id_option_menu SERIAL&lt;br&gt;FK id_section_menu INT NOT NULL&lt;br&gt;FK id_produit INT NOT NULL&lt;br&gt;supplement_prix NUMERIC(10,2) DEFAULT 0 CHECK &amp;gt;= 0&lt;br&gt;actif BOOLEAN DEFAULT true&lt;br&gt;UNIQUE (id_section_menu, id_produit)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff0c8;strokeColor=#b7791f;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;fontFamily=Helvetica;fontSize=11;fontColor=#172033;" vertex="1" parent="1">
+          <mxGeometry x="860" y="795" width="320" height="170" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="commandes" value="&lt;b&gt;commandes&lt;/b&gt;&lt;hr&gt;PK id_commande SERIAL&lt;br&gt;numero_retrait VARCHAR(30) NOT NULL&lt;br&gt;source VARCHAR(20) CHECK IN ('api','back_office')&lt;br&gt;type_service VARCHAR(20) CHECK IN ('sur_place','a_emporter')&lt;br&gt;statut VARCHAR(20) CHECK IN ('a_preparer','preparee','livree')&lt;br&gt;total NUMERIC(10,2) CHECK total &amp;gt;= 0&lt;br&gt;date_commande TIMESTAMP NOT NULL&lt;br&gt;date_heure_retrait_prevue TIMESTAMP NULL&lt;br&gt;FK id_utilisateur_auteur INT NULL&lt;br&gt;date_preparation TIMESTAMP NULL&lt;br&gt;date_livraison TIMESTAMP NULL" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dff1e2;strokeColor=#3f8449;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;fontFamily=Helvetica;fontSize=11;fontColor=#172033;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="145" width="490" height="330" as="geometry"/>
+        </mxCell>
+        <mxCell id="lignes_commande" value="&lt;b&gt;lignes_commande&lt;/b&gt;&lt;hr&gt;PK id_ligne_commande SERIAL&lt;br&gt;FK id_commande INT NOT NULL&lt;br&gt;type_ligne VARCHAR(20) CHECK IN ('produit','menu')&lt;br&gt;FK id_produit INT NULL&lt;br&gt;FK id_menu INT NULL&lt;br&gt;libelle_article VARCHAR(150) NOT NULL&lt;br&gt;quantite INTEGER CHECK quantite &amp;gt; 0&lt;br&gt;prix_unitaire_applique NUMERIC(10,2) CHECK &amp;gt;= 0&lt;br&gt;sous_total NUMERIC(10,2) CHECK &amp;gt;= 0&lt;br&gt;XOR id_produit / id_menu" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dff1e2;strokeColor=#3f8449;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;fontFamily=Helvetica;fontSize=11;fontColor=#172033;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="540" width="490" height="285" as="geometry"/>
+        </mxCell>
+        <mxCell id="choix_ligne_commande" value="&lt;b&gt;choix_ligne_commande&lt;/b&gt;&lt;hr&gt;PK id_choix_ligne_commande SERIAL&lt;br&gt;FK id_ligne_commande INT NOT NULL&lt;br&gt;FK id_produit INT NOT NULL&lt;br&gt;nom_section VARCHAR(100) NOT NULL&lt;br&gt;libelle_produit VARCHAR(150) NOT NULL&lt;br&gt;prix_supplement_applique NUMERIC(10,2) DEFAULT 0 CHECK &amp;gt;= 0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dff1e2;strokeColor=#3f8449;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;fontFamily=Helvetica;fontSize=11;fontColor=#172033;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="890" width="490" height="185" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="traces_actions" value="&lt;b&gt;traces_actions&lt;/b&gt;&lt;hr&gt;PK id_trace SERIAL&lt;br&gt;FK id_utilisateur INT NULL&lt;br&gt;action VARCHAR(100) NOT NULL&lt;br&gt;table_cible VARCHAR(100) NOT NULL&lt;br&gt;id_cible INT NULL&lt;br&gt;date_action TIMESTAMP NOT NULL&lt;br&gt;details TEXT NULL&lt;br&gt;&lt;i&gt;table_cible/id_cible : pas de FK polymorphe stricte&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#efe3f7;strokeColor=#7b5aa6;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;fontFamily=Helvetica;fontSize=11;fontColor=#172033;" vertex="1" parent="1">
+          <mxGeometry x="70" y="805" width="300" height="205" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="constraints" value="&lt;b&gt;Contraintes principales visibles&lt;/b&gt;&lt;hr&gt;CHECK valeurs controlees : source ('api','back_office'), type_service ('sur_place','a_emporter'), statut ('a_preparer','preparee','livree'), type_ligne ('produit','menu').&lt;br&gt;XOR lignes_commande : une ligne reference soit un produit, soit un menu, jamais les deux.&lt;br&gt;Prix, supplements et totaux &amp;gt;= 0 ; quantite &amp;gt; 0 ; quantite_min &amp;gt;= 0 ; quantite_max &amp;gt;= quantite_min.&lt;br&gt;numero_retrait : numero du chevalet, non genere par la BDD.&lt;br&gt;source = api =&amp;gt; auteur NULL ; source = back_office =&amp;gt; auteur requis.&lt;br&gt;Suppression physique evitee : actif/disponible pour desactivation ou archivage.&lt;br&gt;Modele volontairement simple : pas de clients, paiements, stocks, sessions, tables statuts_commande ou sources_commande." style="shape=note;whiteSpace=wrap;html=1;size=18;verticalAlign=top;align=left;spacingTop=8;spacingLeft=10;fillColor=#fff8cc;strokeColor=#c7a329;fontFamily=Helvetica;fontSize=12;fontColor=#172033;" vertex="1" parent="1">
+          <mxGeometry x="440" y="1140" width="1380" height="210" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend" value="&lt;b&gt;Legende&lt;/b&gt;&lt;br&gt;PK = cle primaire&lt;br&gt;FK = cle etrangere&lt;br&gt;NULL = reference optionnelle&lt;br&gt;1,N / 0,N = cardinalite cote parent" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#94a3b8;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;fontFamily=Helvetica;fontSize=11;fontColor=#334155;" vertex="1" parent="1">
+          <mxGeometry x="70" y="1085" width="300" height="120" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="edge_roles_utilisateurs" value="roles 1,N - utilisateurs" style="endArrow=ERmany;startArrow=ERone;html=1;rounded=0;strokeColor=#334155;strokeWidth=1.4;edgeStyle=orthogonalEdgeStyle;fontFamily=Helvetica;fontSize=11;fontColor=#334155;" edge="1" parent="1" source="roles" target="utilisateurs">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_categories_produits" value="categories 1,N - produits" style="endArrow=ERmany;startArrow=ERone;html=1;rounded=0;strokeColor=#334155;strokeWidth=1.4;edgeStyle=orthogonalEdgeStyle;fontFamily=Helvetica;fontSize=11;fontColor=#334155;" edge="1" parent="1" source="categories" target="produits">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_menus_sections" value="menus 1,N - sections_menu" style="endArrow=ERmany;startArrow=ERone;html=1;rounded=0;strokeColor=#334155;strokeWidth=1.4;edgeStyle=orthogonalEdgeStyle;fontFamily=Helvetica;fontSize=11;fontColor=#334155;" edge="1" parent="1" source="menus" target="sections_menu">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_sections_options" value="sections_menu 1,N - options_menu" style="endArrow=ERmany;startArrow=ERone;html=1;rounded=0;strokeColor=#334155;strokeWidth=1.4;edgeStyle=orthogonalEdgeStyle;fontFamily=Helvetica;fontSize=11;fontColor=#334155;" edge="1" parent="1" source="sections_menu" target="options_menu">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_produits_options" value="produits 1,N - options_menu" style="endArrow=ERmany;startArrow=ERone;html=1;rounded=0;strokeColor=#334155;strokeWidth=1.4;edgeStyle=orthogonalEdgeStyle;fontFamily=Helvetica;fontSize=11;fontColor=#334155;" edge="1" parent="1" source="produits" target="options_menu">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="820" y="665"/>
+              <mxPoint x="820" y="880"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_utilisateurs_commandes" value="utilisateurs 0,N - commandes (auteur nullable)" style="endArrow=ERmany;startArrow=ERone;html=1;rounded=0;strokeColor=#334155;strokeWidth=1.4;edgeStyle=orthogonalEdgeStyle;fontFamily=Helvetica;fontSize=11;fontColor=#334155;" edge="1" parent="1" source="utilisateurs" target="commandes">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="420" y="465"/>
+              <mxPoint x="420" y="300"/>
+              <mxPoint x="1240" y="300"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_commandes_lignes" value="commandes 1,N - lignes_commande" style="endArrow=ERmany;startArrow=ERone;html=1;rounded=0;strokeColor=#334155;strokeWidth=1.4;edgeStyle=orthogonalEdgeStyle;fontFamily=Helvetica;fontSize=11;fontColor=#334155;" edge="1" parent="1" source="commandes" target="lignes_commande">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_produits_lignes" value="produits 0,N - lignes_commande (FK nullable)" style="endArrow=ERmany;startArrow=ERone;html=1;rounded=0;strokeColor=#64748b;strokeWidth=1.2;dashed=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Helvetica;fontSize=11;fontColor=#475569;" edge="1" parent="1" source="produits" target="lignes_commande">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1235" y="600"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_menus_lignes" value="menus 0,N - lignes_commande (FK nullable)" style="endArrow=ERmany;startArrow=ERone;html=1;rounded=0;strokeColor=#64748b;strokeWidth=1.2;dashed=1;edgeStyle=orthogonalEdgeStyle;fontFamily=Helvetica;fontSize=11;fontColor=#475569;" edge="1" parent="1" source="menus" target="lignes_commande">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1240" y="350"/>
+              <mxPoint x="1240" y="685"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_lignes_choix" value="lignes_commande 0,N - choix_ligne_commande" style="endArrow=ERmany;startArrow=ERone;html=1;rounded=0;strokeColor=#334155;strokeWidth=1.4;edgeStyle=orthogonalEdgeStyle;fontFamily=Helvetica;fontSize=11;fontColor=#334155;" edge="1" parent="1" source="lignes_commande" target="choix_ligne_commande">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_produits_choix" value="produits 1,N - choix_ligne_commande" style="endArrow=ERmany;startArrow=ERone;html=1;rounded=0;strokeColor=#334155;strokeWidth=1.4;edgeStyle=orthogonalEdgeStyle;fontFamily=Helvetica;fontSize=11;fontColor=#334155;" edge="1" parent="1" source="produits" target="choix_ligne_commande">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="820" y="725"/>
+              <mxPoint x="820" y="982"/>
+              <mxPoint x="1240" y="982"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_utilisateurs_traces" value="utilisateurs 0,N - traces_actions (nullable)" style="endArrow=ERmany;startArrow=ERone;html=1;rounded=0;strokeColor=#334155;strokeWidth=1.4;edgeStyle=orthogonalEdgeStyle;fontFamily=Helvetica;fontSize=11;fontColor=#334155;" edge="1" parent="1" source="utilisateurs" target="traces_actions">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

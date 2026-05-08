@@ -1,0 +1,2 @@
+-- PostgreSQL development seed data for Wacdo Bloc 2.
+-- This file will contain the minimum data set used for local development and tests.
