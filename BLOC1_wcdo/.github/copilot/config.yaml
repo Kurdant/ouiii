@@ -1,0 +1,6 @@
+# HERMES Configuration - Dispatcher Universel BYAN
+user_name: Yan
+communication_language: Francais
+document_output_language: Francais
+output_folder: "{project-root}/_byan-output"
+project_root: "c:\Users\hugop\Desktop\EXAM\ouiii\BLOC1_wcdo"

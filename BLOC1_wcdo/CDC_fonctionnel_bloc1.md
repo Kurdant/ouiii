@@ -124,6 +124,7 @@ l’affichage de l’offre.
 
 **Système externe : API fictive de traitement des commandes**
 L'application envoie, après validation finale, un fichier JSON contenant le détail de la commande à cette API fictive. 
+Dans le cadre de ce projet front-end, cette API peut être simulée côté client afin de ne pas dépendre d’un service externe réel. Le contrat d’échange reste néanmoins explicite : le front construit le JSON final, déclenche un envoi logique et considère la commande comme transmise lorsqu’un succès simulé cohérent avec le contrat technique est retourné.
 
 
 ## Glossaire
@@ -627,6 +628,7 @@ L’application doit générer un objet JSON représentant fidèlement la comman
 EF-014 — Envoi de la commande
 
 L’application doit transmettre la commande validée à une API fictive.
+Dans le cadre de l’examen front-end, cette transmission peut être simulée localement tant que le point d’envoi reste identifié et que le comportement de succès ou d’échec respecte le contrat technique retenu.
 
 EF-015 — Confirmation de prise en compte
 

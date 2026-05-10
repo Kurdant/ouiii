@@ -426,6 +426,7 @@ Utilisation autorisée :
 **Rôle**
 
 `payload-builder.js` récupère les données finales du parcours, construit le JSON final de commande puis déclenche l’envoi vers l’API fictive.
+Il supporte un mode `mock` activé par défaut pour l’examen et un mode `http` conservé pour un branchement ultérieur vers une vraie route serveur.
 
 **Reçoit**
 
@@ -448,6 +449,8 @@ Utilisation autorisée :
 - relire `orderType` et `panier` via `storage.js` ;
 - construire en interne la structure finale de commande ;
 - construire le JSON conforme au contrat d’envoi ;
+- simuler par défaut une réponse de succès de type `202` en mode `mock`, sans dépendre d’un service externe réel ;
+- utiliser un appel HTTP réel uniquement lorsqu’un mode `http` explicite est activé ;
 - générer les `MouvementStock` éventuels à partir du panier final ;
 - déclencher l’envoi vers l’API fictive ;
 - retourner le résultat d’envoi à `chevalet.js`.
@@ -568,7 +571,10 @@ L’envoi final est déclenché uniquement par `payload-builder.js`, après réc
 Le contrat d’envoi retenu est le suivant :
 
 - méthode HTTP : `POST` ;
-- URL d’envoi : une URL d’API fictive configurée dans `payload-builder.js` ;
+- route documentaire cible : `/envoie/commande` ;
+- mode d’exécution par défaut : `mock`, configurable dans `payload-builder.js` via une constante dédiée ;
+- en mode `mock`, aucun service externe n’est requis : le front simule un envoi asynchrone court et retourne un résultat de succès `{ ok: true, status: 202 }` ;
+- en mode `http`, l’URL d’envoi réelle est configurée dans `payload-builder.js` et appelée avec `fetch` ;
 - en-tête obligatoire : `Content-Type: application/json` ;
 - corps de la requête : payload JSON retourné par `payload-builder.js` ;
 - aucun envoi ne doit être tenté tant que `orderType`, `panier` et `withdrawNumber` ne sont pas valides.
@@ -582,21 +588,25 @@ Le rôle des deux fichiers est strictement séparé :
 
 Réponse attendue en cas de succès :
 
-- code HTTP `202` ;
+- en mode `mock`, un statut simulé `202` ;
+- en mode `http`, un code HTTP `202` ;
 - la réception de cette réponse valide la transmission de la commande ;
 - aucun contenu JSON de retour n’est obligatoire pour poursuivre le parcours.
 
 Réponse attendue en cas d’échec :
 
-- code HTTP différent de `202`, absence de réponse exploitable ou erreur réseau ;
+- en mode `mock`, un échec seulement si un scénario de test le force explicitement ;
+- en mode `http`, code HTTP différent de `202`, absence de réponse exploitable ou erreur réseau ;
 - réponse éventuelle pouvant contenir un message d’erreur ;
 - en cas d’échec, l’utilisateur reste sur `chevalet.html` avec son panier et son numéro déjà saisi.
 
 Règles techniques d’envoi :
 
-- l’appel API est réalisé avec `fetch` depuis `payload-builder.js` ;
-- l’URL configurée doit accepter les requêtes `POST` depuis le navigateur ;
-- un délai maximal de 10 secondes est retenu pour considérer l’appel comme échoué ;
+- le mode retenu par défaut pour l’examen est `mock` ;
+- la route `/envoie/commande` reste le point d’entrée documentaire de référence pour un futur branchement serveur ;
+- l’appel API est réalisé avec `fetch` depuis `payload-builder.js` uniquement en mode `http` ;
+- en mode `http`, l’URL configurée doit accepter les requêtes `POST` depuis le navigateur ;
+- en mode `http`, un délai maximal de 10 secondes est retenu pour considérer l’appel comme échoué ;
 - un seul envoi doit être lancé par action utilisateur de confirmation ;
 - le passage à `remerciement.html` n’est autorisé qu’après une réponse de succès.
 
