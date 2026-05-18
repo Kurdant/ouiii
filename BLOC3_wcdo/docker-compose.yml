@@ -1,0 +1,53 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wacdo_b3_app
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - wacdo_b3
+
+  web:
+    image: nginx:1.27-alpine
+    container_name: wacdo_b3_web
+    ports:
+      - "8081:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - app
+    networks:
+      - wacdo_b3
+
+  db:
+    image: postgres:16-alpine
+    container_name: wacdo_b3_db
+    environment:
+      POSTGRES_DB: wacdo
+      POSTGRES_USER: wacdo
+      POSTGRES_PASSWORD: wacdo
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata_b3:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wacdo -d wacdo"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - wacdo_b3
+
+volumes:
+  pgdata_b3:
+
+networks:
+  wacdo_b3:
+    driver: bridge
