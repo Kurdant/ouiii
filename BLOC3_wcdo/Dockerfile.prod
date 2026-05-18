@@ -1,0 +1,64 @@
+# ---- Stage 1 : build (composer install sans dépendances de dev) ----
+FROM php:8.3-fpm-alpine AS builder
+
+RUN apk add --no-cache \
+        bash \
+        git \
+        unzip \
+        icu-dev \
+        libzip-dev \
+        postgresql-dev \
+        oniguruma-dev \
+    && docker-php-ext-install \
+        pdo \
+        pdo_pgsql \
+        pgsql \
+        intl \
+        zip \
+        bcmath \
+    && rm -rf /var/cache/apk/*
+
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www/html
+
+# Copier uniquement les fichiers de dépendances en premier pour profiter du cache Docker.
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-scripts
+
+# Copier le reste du code source.
+COPY . .
+
+# Générer le cache de packages Laravel (découverte des service providers).
+RUN php artisan package:discover --ansi 2>/dev/null || true
+
+# ---- Stage 2 : image runtime (sans git, sans composer) ----
+FROM php:8.3-fpm-alpine
+
+RUN apk add --no-cache \
+        bash \
+        icu-dev \
+        libzip-dev \
+        postgresql-dev \
+        oniguruma-dev \
+    && docker-php-ext-install \
+        pdo \
+        pdo_pgsql \
+        pgsql \
+        intl \
+        zip \
+        bcmath \
+    && rm -rf /var/cache/apk/*
+
+WORKDIR /var/www/html
+
+# Copier le résultat du stage build (code + vendor optimisé).
+COPY --from=builder /var/www/html /var/www/html
+
+COPY docker/php/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+EXPOSE 9000
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["php-fpm"]

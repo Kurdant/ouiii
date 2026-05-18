@@ -1,0 +1,32 @@
+# Dépendances installées par le build (recréées dans l'image).
+/vendor
+/node_modules
+
+# Fichiers sensibles — jamais dans l'image.
+.env
+.env.*
+
+# Cache Docker local — inutile dans le contexte de build.
+.git
+.gitignore
+
+# Dossiers de runtime Laravel (créés par l'entrypoint au démarrage).
+/storage/framework/cache
+/storage/framework/sessions
+/storage/framework/testing
+/storage/framework/views
+/storage/logs
+
+# Fichiers de dev et test — pas en prod.
+/tests
+phpunit.xml
+*.md
+Sprints.md
+Makefile
+
+# Artifacts IDE.
+/.idea
+/.vscode
+/.fleet
+/.nova
+/.zed
