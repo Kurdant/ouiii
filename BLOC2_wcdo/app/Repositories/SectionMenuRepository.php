@@ -35,6 +35,7 @@ final class SectionMenuRepository extends BaseRepository
                    AND o.actif = true
              LEFT JOIN produits p
                     ON p.id_produit = o.id_produit
+                   AND p.actif = true
              WHERE s.id_menu = :id_menu
              ORDER BY s.id_section_menu ASC, o.id_option_menu ASC'
         );
@@ -50,7 +51,7 @@ final class SectionMenuRepository extends BaseRepository
                 $sections[$sid] = [
                     'id_section_menu' => $sid,
                     'nom'             => (string) $row['section_nom'],
-                    'obligatoire'     => $row['obligatoire'] === 't',
+                    'obligatoire'     => ($row['obligatoire'] === true || $row['obligatoire'] === 't'),
                     'quantite_min'    => (int) $row['quantite_min'],
                     'quantite_max'    => (int) $row['quantite_max'],
                     'options'         => [],
@@ -65,7 +66,7 @@ final class SectionMenuRepository extends BaseRepository
                     'produit_nom'     => (string) $row['produit_nom'],
                     'produit_prix'    => (float) $row['produit_prix'],
                     'supplement_prix' => (float) $row['supplement_prix'],
-                    'disponible'      => $row['disponible'] === 't',
+                    'disponible'      => ($row['disponible'] === true || $row['disponible'] === 't'),
                 ];
             }
         }
@@ -98,7 +99,8 @@ final class SectionMenuRepository extends BaseRepository
             'id_section_menu' => (int) $row['id_section_menu'],
             'id_menu'         => (int) $row['id_menu'],
             'nom'             => (string) $row['nom'],
-            'obligatoire'     => filter_var($row['obligatoire'], FILTER_VALIDATE_BOOLEAN),
+            // PostgreSQL retourne 't' ou 'f' (texte) via PDO — pas un vrai booléen
+            'obligatoire'     => ($row['obligatoire'] === true || $row['obligatoire'] === 't'),
             'quantite_min'    => (int) $row['quantite_min'],
             'quantite_max'    => (int) $row['quantite_max'],
         ];

@@ -15,6 +15,7 @@
 ### 10 Environnement de développement
 ### 11 Déploiement
 ### 12 Conventions de développement
+### 13 Plan de développement par sprints
 
 ---
 
@@ -68,25 +69,25 @@ Le dictionnaire des données ci-dessous reprend les données nécessaires au MCD
 
 | Entité | Attribut | Type de donnée | Contraintes / Notes |
 |---|---|---|---|
-| Collaborateur | `id_collaborateur` | INT | Clé primaire, auto-incrémentée. |
+| Collaborateur | `id` | INT | Clé primaire technique Laravel, auto-incrémentée. |
 | Collaborateur | `nom` | VARCHAR(100) | Obligatoire, non vide. Contrôlé avant enregistrement. |
 | Collaborateur | `prenom` | VARCHAR(100) | Obligatoire, non vide. Contrôlé avant enregistrement. |
 | Collaborateur | `email` | VARCHAR(180) | Obligatoire, format email valide, unique. Sert d'identifiant de connexion. |
 | Collaborateur | `telephone` | VARCHAR(20) | Optionnel. Format téléphone contrôlé si renseigné. Retenu pour couvrir l'exigence de validation du référentiel. |
 | Collaborateur | `date_premiere_embauche` | DATE | Obligatoire. Date valide. |
 | Collaborateur | `administrateur` | BOOLEAN | Obligatoire, valeur par défaut `false`. `true` autorise l'accès applicatif. |
-| Collaborateur | `mot_de_passe_hash` | VARCHAR(255) | Obligatoire si `administrateur = true`. Vide pour un collaborateur non administrateur. Le mot de passe n'est jamais stocké en clair. |
-| Restaurant | `id_restaurant` | INT | Clé primaire, auto-incrémentée. |
+| Collaborateur | `password` | VARCHAR(255) | Obligatoire si `administrateur = true`. Contient exclusivement le hash généré par Laravel, jamais le mot de passe en clair. |
+| Restaurant | `id` | INT | Clé primaire technique Laravel, auto-incrémentée. |
 | Restaurant | `nom` | VARCHAR(150) | Obligatoire, non vide. Utilisé pour la recherche. |
 | Restaurant | `adresse` | VARCHAR(255) | Obligatoire, non vide. Contrôlée avant enregistrement. |
 | Restaurant | `code_postal` | VARCHAR(10) | Obligatoire. Format code postal valide. Stocké en texte pour conserver les zéros initiaux. |
 | Restaurant | `ville` | VARCHAR(100) | Obligatoire, non vide. Utilisée pour les filtres restaurant et affectation. |
-| Fonction | `id_fonction` | INT | Clé primaire, auto-incrémentée. |
+| Fonction | `id` | INT | Clé primaire technique Laravel, auto-incrémentée. |
 | Fonction | `intitule_poste` | VARCHAR(120) | Obligatoire, non vide, unique. Intitulé du poste existant chez Wacdo. |
-| Affectation | `id_affectation` | INT | Clé primaire, auto-incrémentée. |
-| Affectation | `id_collaborateur` | INT | Clé étrangère obligatoire vers `Collaborateur.id_collaborateur`. |
-| Affectation | `id_restaurant` | INT | Clé étrangère obligatoire vers `Restaurant.id_restaurant`. |
-| Affectation | `id_fonction` | INT | Clé étrangère obligatoire vers `Fonction.id_fonction`. |
+| Affectation | `id` | INT | Clé primaire technique Laravel, auto-incrémentée. |
+| Affectation | `collaborateur_id` | INT | Clé étrangère obligatoire vers `collaborateurs.id`. |
+| Affectation | `restaurant_id` | INT | Clé étrangère obligatoire vers `restaurants.id`. |
+| Affectation | `fonction_id` | INT | Clé étrangère obligatoire vers `fonctions.id`. |
 | Affectation | `date_debut` | DATE | Obligatoire. Date de début de l'affectation. |
 | Affectation | `date_fin` | DATE | Facultative. Vide si aucune date de fin n'est connue. Si renseignée, elle doit être supérieure ou égale à `date_debut`. |
 
@@ -308,11 +309,11 @@ Les choix techniques retenus sont volontairement simples, cohérents entre eux e
 
 ### 5.1 Framework back
 
-Le framework retenu est **Laravel**.
+Le framework retenu est **Laravel 11**.
 
 Ce choix est retenu pour quatre raisons :
 
-- Laravel répond exactement au cadrage du sujet Bloc 3 orienté framework back.
+- Laravel 11 répond exactement au cadrage du sujet Bloc 3 orienté framework back.
 - Il fournit nativement le routage, les contrôleurs, le moteur de templates, l'ORM, la validation, les middlewares et la gestion de session.
 - Il permet de produire rapidement un back-office propre sans surcouche front inutile.
 - Il reste simple à expliquer à l'oral : cycle requête, route, contrôleur, vue, modèle, validation, sécurité.
@@ -393,7 +394,7 @@ La stack retenue est donc la suivante :
 
 | Domaine | Choix retenu |
 |---|---|
-| Framework back | Laravel |
+| Framework back | Laravel 11 |
 | Langage serveur | PHP 8.3 |
 | Gestionnaire de dépendances | Composer |
 | Moteur de templates | Blade |
@@ -737,28 +738,30 @@ Le MCD est traduit en quatre tables métier principales.
 
 La table `affectations` est la table centrale du modèle relationnel. Chaque ligne représente une période d'affectation. Elle répond à la question métier : quel collaborateur travaille dans quel restaurant, sur quelle fonction, et sur quelle période.
 
-Aucune table `utilisateurs` séparée n'est créée. Le collaborateur porte lui-même les informations nécessaires à la connexion : `email`, `mot_de_passe_hash` et `administrateur`.
+Aucune table `utilisateurs` séparée n'est créée. Le collaborateur porte lui-même les informations nécessaires à la connexion : `email`, `password` et `administrateur`. Le champ `password` suit la convention Laravel et contient le hash généré par le framework, jamais le mot de passe en clair.
 
 Aucune table `roles`, `permissions`, `historique_affectations` ou `statuts_affectation` n'est retenue. Ces tables ajouteraient une complexité non demandée par le besoin.
 
 ### 7.3 Clés, relations et intégrité référentielle
 
-Chaque table possède une clé primaire technique conforme au dictionnaire des données :
+Chaque table possède une clé primaire technique conforme aux conventions Laravel. La clé primaire est nommée `id` dans chaque table.
 
 | Table | Clé primaire |
 |---|---|
-| `collaborateurs` | `id_collaborateur` |
-| `restaurants` | `id_restaurant` |
-| `fonctions` | `id_fonction` |
-| `affectations` | `id_affectation` |
+| `collaborateurs` | `id` |
+| `restaurants` | `id` |
+| `fonctions` | `id` |
+| `affectations` | `id` |
+
+Cette décision est volontaire. Le MCD conserve des entités métier nommées clairement, mais l'implémentation Laravel utilise les clés techniques standards du framework. Cela évite de configurer inutilement les clés primaires dans chaque modèle Eloquent et rend les relations, les migrations, les factories, les seeders et le route model binding plus simples.
 
 La table `affectations` porte trois clés étrangères obligatoires :
 
 | Colonne | Référence | Règle |
 |---|---|---|
-| `id_collaborateur` | `collaborateurs.id_collaborateur` | Une affectation concerne un collaborateur existant. |
-| `id_restaurant` | `restaurants.id_restaurant` | Une affectation concerne un restaurant existant. |
-| `id_fonction` | `fonctions.id_fonction` | Une affectation concerne une fonction existante. |
+| `collaborateur_id` | `collaborateurs.id` | Une affectation concerne un collaborateur existant. |
+| `restaurant_id` | `restaurants.id` | Une affectation concerne un restaurant existant. |
+| `fonction_id` | `fonctions.id` | Une affectation concerne une fonction existante. |
 
 Ces clés étrangères traduisent les cardinalités du MCD : un collaborateur, un restaurant ou une fonction possède zéro, une ou plusieurs affectations ; une affectation référence obligatoirement un seul collaborateur, un seul restaurant et une seule fonction.
 
@@ -781,10 +784,10 @@ Les contraintes principales retenues sont les suivantes :
 | `collaborateurs` | `nom`, `prenom`, `email`, `date_premiere_embauche` et `administrateur` obligatoires. |
 | `collaborateurs` | `email` unique pour tous les collaborateurs. |
 | `collaborateurs` | `administrateur` vaut `false` par défaut. |
-| `collaborateurs` | `mot_de_passe_hash` obligatoire lorsque `administrateur = true`. |
+| `collaborateurs` | `password` obligatoire lorsque `administrateur = true`. Le hash est produit par Laravel avec `Hash::make`. |
 | `restaurants` | `nom`, `adresse`, `code_postal` et `ville` obligatoires. |
 | `fonctions` | `intitule_poste` obligatoire et unique. |
-| `affectations` | `id_collaborateur`, `id_restaurant`, `id_fonction` et `date_debut` obligatoires. |
+| `affectations` | `collaborateur_id`, `restaurant_id`, `fonction_id` et `date_debut` obligatoires. |
 | `affectations` | `date_fin` facultative. |
 | `affectations` | `date_fin` supérieure ou égale à `date_debut` lorsqu'elle est renseignée. |
 | `affectations` | Doublon strict interdit sur collaborateur, restaurant, fonction, date de début et date de fin. |
@@ -798,7 +801,7 @@ CHECK (date_fin IS NULL OR date_fin >= date_debut)
 Le mot de passe d'un administrateur est également protégé par une contrainte de cohérence.
 
 ```sql
-CHECK (administrateur = false OR mot_de_passe_hash IS NOT NULL)
+CHECK (administrateur = false OR password IS NOT NULL)
 ```
 
 Le doublon strict d'affectation doit couvrir le cas où `date_fin` est vide. En PostgreSQL, cette règle est portée par un index unique utilisant `NULLS NOT DISTINCT` afin que deux valeurs `NULL` soient considérées comme identiques pour cette contrainte métier.
@@ -806,9 +809,9 @@ Le doublon strict d'affectation doit couvrir le cas où `date_fin` est vide. En 
 ```sql
 CREATE UNIQUE INDEX affectations_unique_strict
 ON affectations (
-	id_collaborateur,
-	id_restaurant,
-	id_fonction,
+	collaborateur_id,
+	restaurant_id,
+	fonction_id,
 	date_debut,
 	date_fin
 )
@@ -853,16 +856,16 @@ Les index retenus servent les besoins de recherche, de jointure et d'intégrité
 | Index unique sur `collaborateurs.email` | Authentification et unicité métier. |
 | Index unique sur `fonctions.intitule_poste` | Référentiel de postes sans doublon. |
 | Index unique strict sur `affectations` | Refus des doublons stricts d'affectation. |
-| Index sur `affectations.id_collaborateur` | Affichage des affectations d'un collaborateur. |
-| Index sur `affectations.id_restaurant` | Affichage des affectations d'un restaurant. |
-| Index sur `affectations.id_fonction` | Filtrage des affectations par fonction. |
+| Index sur `affectations.collaborateur_id` | Affichage des affectations d'un collaborateur. |
+| Index sur `affectations.restaurant_id` | Affichage des affectations d'un restaurant. |
+| Index sur `affectations.fonction_id` | Filtrage des affectations par fonction. |
 | Index sur `affectations.date_debut` et `affectations.date_fin` | Recherche des affectations en cours, futures ou terminées. |
 | Index sur `restaurants.ville` et `restaurants.code_postal` | Recherche des restaurants et recherche des affectations par ville. |
 | Index sur `collaborateurs.nom`, `collaborateurs.prenom` et `restaurants.nom` | Recherche simple dans les listes de gestion. |
 
 Les index non retenus sont également fixés pour éviter la sur-optimisation :
 
-- aucun index sur `mot_de_passe_hash`, car ce champ n'est jamais recherché directement ;
+- aucun index sur `password`, car ce champ n'est jamais recherché directement ;
 - aucun index sur `telephone`, car aucun filtre métier ne l'utilise ;
 - aucun index sur un statut d'affectation, car aucun statut n'est stocké ;
 - aucun index full-text ou trigram, car les recherches attendues restent simples.
@@ -883,6 +886,25 @@ Cet ordre garantit que les tables référencées existent avant la création des
 Les migrations constituent la référence technique du schéma. Aucune modification manuelle de la base n'est retenue comme procédure normale. Le même schéma est reconstruit localement, en environnement Docker et sur le serveur de déploiement.
 
 Les seeders Laravel servent uniquement à alimenter des données de démonstration nécessaires au développement et à la soutenance. Ils ne remplacent pas les migrations et ne définissent pas la structure de la base.
+
+Un seeder initial crée le premier collaborateur administrateur afin de permettre la première connexion après installation. Ce seeder utilise obligatoirement `Hash::make` pour produire le hash du mot de passe. Aucun mot de passe déjà haché manuellement n'est écrit en dur dans la base ou dans les migrations.
+
+### 7.9 Scopes et requêtes Eloquent à prévoir
+
+Les modèles Eloquent doivent porter les relations et les requêtes réutilisables afin d'éviter de dupliquer les mêmes conditions dans plusieurs contrôleurs.
+
+| Modèle | Scope ou requête | Usage |
+|---|---|---|
+| `Affectation` | `enCours($date)` | Retourner les affectations actives à une date donnée. |
+| `Affectation` | `futures($date)` | Retourner les affectations dont la date de début est postérieure à la date donnée. |
+| `Affectation` | `terminees($date)` | Retourner les affectations dont la date de fin est passée. |
+| `Affectation` | `filtrer($fonction, $dateDebut, $dateFin, $ville)` | Alimenter la recherche transversale des affectations. |
+| `Collaborateur` | `rechercher($nom, $prenom, $email)` | Alimenter la liste filtrée des collaborateurs. |
+| `Collaborateur` | `nonAffectes($date)` | Retourner les collaborateurs sans affectation active à la date donnée. |
+| `Restaurant` | `rechercher($nom, $codePostal, $ville)` | Alimenter la liste filtrée des restaurants. |
+| `Fonction` | `ordonnerParIntitule()` | Afficher le référentiel des fonctions dans un ordre stable. |
+
+Les fiches détail utilisent les relations Eloquent avec chargement explicite des données nécessaires : un restaurant charge ses affectations avec le collaborateur et la fonction ; un collaborateur charge ses affectations avec le restaurant et la fonction. Cette règle évite les requêtes répétées inutiles dans les vues Blade.
 
 ## 8 Schéma BDD
 
@@ -909,10 +931,10 @@ Le diagramme affiche les attributs métier réellement stockés dans la base, sa
 
 | Table | Attributs visibles dans le schéma |
 |---|---|
-| `collaborateurs` | `id_collaborateur`, `nom`, `prenom`, `email`, `telephone`, `date_premiere_embauche`, `administrateur`, `mot_de_passe_hash` |
-| `restaurants` | `id_restaurant`, `nom`, `adresse`, `code_postal`, `ville` |
-| `fonctions` | `id_fonction`, `intitule_poste` |
-| `affectations` | `id_affectation`, `id_collaborateur`, `id_restaurant`, `id_fonction`, `date_debut`, `date_fin` |
+| `collaborateurs` | `id`, `nom`, `prenom`, `email`, `telephone`, `date_premiere_embauche`, `administrateur`, `password` |
+| `restaurants` | `id`, `nom`, `adresse`, `code_postal`, `ville` |
+| `fonctions` | `id`, `intitule_poste` |
+| `affectations` | `id`, `collaborateur_id`, `restaurant_id`, `fonction_id`, `date_debut`, `date_fin` |
 
 Le schéma affiche également les marqueurs suivants lorsque cela est utile à la lecture :
 
@@ -964,3 +986,648 @@ Les éléments suivants sont donc exclus du schéma graphique et restent documen
 - les statuts calculés `en cours`, `future` et `terminée` comme colonnes de base.
 
 Ce choix rend le schéma plus lisible à l'oral. Il permet de défendre clairement la logique métier suivante : le modèle comporte quatre tables, trois relations, une table pivot centrale et aucune table additionnelle inutile.
+
+## 9 Sécurité applicative
+
+La sécurité applicative du projet repose sur deux niveaux complémentaires :
+
+- les protections génériques déjà fournies par Laravel ;
+- les règles de sécurité spécifiques au besoin Wacdo.
+
+Laravel apporte le socle technique du projet : sessions serveur, hachage des mots de passe, protection CSRF, échappement Blade, middlewares, validation serveur et requêtes paramétrées via Eloquent ou Query Builder. Le projet doit ensuite configurer et compléter ce socle pour respecter la règle métier centrale suivante : seule une personne identifiée comme collaborateur administrateur peut accéder à l'application.
+
+### 9.1 Authentification et gestion de session
+
+L'authentification repose sur un formulaire de connexion serveur Laravel. L'identifiant retenu est l'adresse email du collaborateur.
+
+Une connexion n'est acceptée que si les quatre conditions suivantes sont réunies :
+
+- le collaborateur existe ;
+- l'email correspond à un compte enregistré ;
+- le mot de passe fourni correspond au hachage stocké ;
+- l'attribut `administrateur` vaut `true`.
+
+Après une connexion réussie, Laravel ouvre une session serveur et l'identifiant de session est immédiatement régénéré. Cette régénération limite le risque de fixation de session.
+
+Après une déconnexion, la session est invalidée et le jeton CSRF est régénéré.
+
+Le périmètre public est réduit au strict minimum :
+
+- `GET /login` ;
+- `POST /login`.
+
+Toutes les autres routes sont protégées par les middlewares du groupe web, par le middleware d'authentification et par le contrôle administrateur.
+
+Le cookie de session est configuré avec les attributs suivants :
+
+- `HttpOnly` ;
+- `SameSite=Lax` ;
+- `Secure` en production.
+
+Le projet ne retient pas de connexion persistante de type `remember me`.
+
+### 9.2 Autorisation et contrôle d'accès
+
+L'autorisation ne repose pas sur une matrice de rôles complexe. Elle repose sur une règle métier unique : un collaborateur authentifié n'accède à l'application que si `administrateur = true`.
+
+Cette règle est appliquée côté serveur par un middleware dédié de type `EnsureUserIsAdmin`, placé sur l'ensemble des routes métier.
+
+Les conséquences sont les suivantes :
+
+- un visiteur non authentifié est redirigé vers la page de connexion ;
+- un collaborateur authentifié mais non administrateur reçoit un refus d'accès ;
+- un administrateur authentifié peut accéder aux écrans du back-office.
+
+Le contrôle d'accès ne repose jamais sur le seul affichage du menu ou sur le masquage d'un bouton. Même si une URL est appelée directement, le refus doit être appliqué côté serveur.
+
+### 9.3 Protection des mots de passe et du formulaire de connexion
+
+Les mots de passe ne sont jamais stockés en clair. Ils sont hachés via les mécanismes natifs de Laravel, au moment de leur création ou de leur modification.
+
+Le champ technique retenu est `password`, conformément aux conventions d'authentification Laravel. Il est obligatoire pour un collaborateur administrateur. Il reste vide pour un collaborateur sans accès applicatif. Sa valeur est toujours produite par `Hash::make` ou par le mécanisme équivalent fourni par Laravel.
+
+La politique minimale retenue pour le mot de passe administrateur est la suivante :
+
+- mot de passe obligatoire ;
+- longueur minimale de 12 caractères ;
+- stockage exclusif sous forme hachée.
+
+Le formulaire de connexion est durci par une limitation des tentatives. La route de connexion utilise un throttling applicatif fondé sur l'adresse IP et l'email saisi. La règle retenue est de 5 tentatives maximum par minute, au-delà desquelles la connexion est temporairement bloquée.
+
+Les messages d'erreur de connexion restent volontairement génériques. L'application ne doit jamais indiquer si l'email existe ou si seul le mot de passe est incorrect.
+
+### 9.4 Protection des formulaires et validation des entrées
+
+Tous les formulaires du back-office sont protégés par jeton CSRF. Aucune écriture métier n'est acceptée sans ce contrôle.
+
+Toutes les validations sont réalisées côté serveur via des Form Requests Laravel. Les contrôles du navigateur ne servent que d'aide à la saisie et ne remplacent jamais la validation serveur.
+
+Les validations applicatives portent notamment sur :
+
+- les noms et prénoms ;
+- l'email ;
+- le téléphone ;
+- l'adresse ;
+- le code postal ;
+- les dates d'affectation ;
+- les identifiants de collaborateur, restaurant et fonction ;
+- l'unicité de l'email ;
+- l'unicité de l'intitulé de fonction ;
+- la cohérence `date_fin >= date_debut`.
+
+Les données textuelles sont normalisées avant persistance :
+
+- suppression des espaces parasites ;
+- email enregistré en minuscules ;
+- valeurs vides non conservées comme données métier utiles.
+
+Les opérations d'écriture restent limitées aux méthodes HTTP prévues à cet effet. Aucune création, modification ou suppression logique n'est portée par une route `GET`.
+
+Les modèles Laravel définissent explicitement les champs modifiables afin d'éviter une affectation massive indésirable sur des champs sensibles comme `administrateur` ou `password`.
+
+### 9.5 Protection contre les attaques web courantes
+
+La protection contre les attaques web courantes repose sur les pratiques suivantes.
+
+**Contre les injections SQL**
+
+- accès aux données uniquement via Eloquent ORM ou Query Builder ;
+- aucune requête SQL brute construite à partir d'entrées utilisateur ;
+- usage des paramètres liés lorsque du SQL ciblé devient nécessaire.
+
+**Contre les attaques XSS**
+
+- affichage des données via Blade avec échappement par défaut ;
+- interdiction d'utiliser du HTML brut pour afficher des données saisies par les utilisateurs ;
+- absence de besoin métier justifiant l'usage de contenu HTML fourni par l'utilisateur.
+
+**Contre les falsifications de requête**
+
+- jeton CSRF sur tous les formulaires du back-office ;
+- session Laravel requise pour toute action d'écriture.
+
+**Contre les contournements d'URL**
+
+- middleware d'authentification ;
+- middleware administrateur ;
+- vérification serveur des ressources chargées et des identifiants fournis.
+
+### 9.6 Intégrité des données comme mesure de sécurité
+
+La sécurité applicative ne se limite pas à la connexion. L'intégrité des données constitue également une mesure de sécurité, car elle empêche l'enregistrement d'états incohérents ou manipulés.
+
+Le projet s'appuie donc sur les contraintes suivantes déjà fixées dans la section 7 :
+
+- unicité de l'email collaborateur ;
+- unicité de l'intitulé de fonction ;
+- clés étrangères obligatoires dans `affectations` ;
+- cohérence chronologique des dates ;
+- interdiction des doublons stricts d'affectation ;
+- suppression physique non exposée pour préserver l'historique.
+
+Ces contraintes protègent l'application contre des écritures incohérentes, qu'elles proviennent d'une erreur de saisie, d'une mauvaise implémentation ou d'une tentative de contournement métier.
+
+### 9.7 Sécurisation de la configuration et de la production
+
+La configuration de production doit rester cohérente avec le niveau de sécurité attendu d'une application interne.
+
+Les règles suivantes sont retenues :
+
+- `APP_DEBUG=false` en production ;
+- utilisation obligatoire du HTTPS sur le serveur déployé ;
+- stockage des secrets d'environnement hors du code source ;
+- aucun mot de passe ni donnée sensible stocké en clair dans les logs ;
+- exposition minimale des messages d'erreur techniques à l'utilisateur final.
+
+Le framework ne suffit pas à lui seul sur ce point. Ces protections relèvent de la configuration réelle de l'environnement Nginx, PHP-FPM et Laravel au moment du déploiement.
+
+### 9.8 Tests de sécurité à prévoir
+
+Le référentiel exige des tests de sécurité avant déploiement. Les contrôles minimaux retenus pour le projet sont les suivants :
+
+- vérifier qu'un utilisateur non authentifié ne peut accéder à aucune route métier ;
+- vérifier qu'un collaborateur non administrateur ne peut pas accéder au back-office ;
+- vérifier qu'un administrateur authentifié accède aux écrans autorisés ;
+- vérifier qu'une requête sans jeton CSRF valide est rejetée ;
+- vérifier qu'un formulaire invalide est refusé côté serveur ;
+- vérifier qu'un mot de passe n'est jamais stocké en clair ;
+- vérifier qu'un doublon strict d'affectation est refusé ;
+- vérifier que la limitation des tentatives de connexion fonctionne.
+
+Ces tests couvrent le niveau de sécurité réellement attendu sur ce projet. Ils sont suffisants pour démontrer une application correctement protégée sans introduire une complexité de sécurité disproportionnée.
+
+### 9.9 Mesures volontairement non retenues
+
+Les mécanismes suivants ne sont pas retenus, car ils surdimensionnent le projet par rapport au besoin réel :
+
+- aucun système de rôles et permissions complexe ;
+- aucun JWT ni token API applicatif ;
+- aucune authentification multi-facteurs ;
+- aucun SSO, LDAP ou OAuth ;
+- aucun moteur de sécurité orienté API publique.
+
+Le projet retient une sécurité simple, lisible et rigoureuse, adaptée à un back-office interne Laravel centré sur l'authentification, le contrôle administrateur, la validation serveur et l'intégrité des données.
+
+## 10 Environnement de développement
+
+L'environnement de développement local est standardisé avec Docker afin de lancer le projet de manière identique sur plusieurs postes sans imposer une installation manuelle de PHP, Composer, Nginx ou PostgreSQL sur la machine hôte. Docker ne suffit cependant pas, à lui seul, à décrire l'environnement de développement : il faut aussi préciser les services exécutés, la configuration locale, les volumes de travail et la procédure de démarrage Laravel.
+
+### 10.1 Objectifs
+
+- homogénéiser l'environnement de développement entre les postes ;
+- isoler les dépendances techniques du système hôte ;
+- reproduire localement l'architecture cible `Nginx + PHP-FPM + PostgreSQL` ;
+- simplifier l'initialisation Laravel avec Composer, Artisan, migrations et seeders ;
+- limiter les écarts entre l'environnement local et l'environnement de déploiement.
+
+### 10.2 Composition minimale retenue
+
+L'environnement local est orchestré avec Docker Compose. La composition minimale retenue comprend les trois services suivants :
+
+| Service | Rôle |
+|---|---|
+| `app` | Conteneur PHP 8.3 exécutant Laravel 11 via PHP-FPM et Composer |
+| `web` | Conteneur Nginx servant le dossier `public` et relayant les scripts PHP vers `app` |
+| `db` | Conteneur PostgreSQL hébergeant la base de données locale du projet |
+
+Cette composition est suffisante pour le Bloc 3. Aucun autre service n'est retenu dans l'environnement minimal.
+
+Le conteneur `app` embarque PHP 8.3, Composer et les extensions nécessaires au projet Laravel, en particulier `pdo_pgsql`, `mbstring`, `ctype`, `json`, `tokenizer`, `xml`, `fileinfo` et `session`. Les images Docker utilisées sont figées sur une version explicite et n'utilisent pas le tag `latest`.
+
+Le service `web` repose sur Nginx avec le dossier `public` comme racine web. Il ne sert jamais la racine du projet afin d'éviter l'exposition du code source, du fichier `.env`, du répertoire `database/` et des fichiers internes Laravel.
+
+Le code source du projet est monté en volume dans les conteneurs `app` et `web` afin que les modifications locales soient prises en compte sans reconstruction systématique de l'image.
+
+Le conteneur `db` héberge PostgreSQL 16. Les données sont stockées dans un volume dédié afin de conserver la base entre deux redémarrages des conteneurs. Depuis Laravel, la base est jointe par le nom du service Docker `db`, et non par `localhost`.
+
+Docker Compose inclut une vérification de disponibilité de PostgreSQL afin d'éviter que l'application n'exécute les migrations avant le démarrage complet du moteur.
+
+### 10.3 Configuration locale
+
+La configuration locale sépare clairement les éléments versionnés et les secrets propres à chaque poste.
+
+- les fichiers de code source, la configuration Docker et les fichiers de configuration applicative génériques sont versionnés ;
+- les secrets techniques et les valeurs spécifiques à un poste ne sont pas versionnés ;
+- un fichier `.env.example` est versionné avec des valeurs factices ;
+- un fichier `.env` local, ignoré par Git, fournit les variables d'environnement réelles nécessaires au lancement.
+
+Variables retenues pour l'environnement local :
+
+| Variable | Valeur retenue ou règle locale | Rôle |
+|---|---|---|
+| `APP_NAME` | `Wacdo` | Nom applicatif Laravel |
+| `APP_ENV` | `local` | Mode d'exécution local |
+| `APP_KEY` | secret généré localement | Clé d'application Laravel |
+| `APP_DEBUG` | `true` | Affichage des erreurs en environnement local |
+| `APP_URL` | `http://localhost:8080` | URL locale d'accès au back-office |
+| `APP_PORT` | `8080` | Port HTTP local exposé par Docker |
+| `DB_CONNECTION` | `pgsql` | Driver Laravel retenu |
+| `DB_HOST` | `db` | Hôte PostgreSQL utilisé par l'application |
+| `DB_PORT` | `5432` | Port PostgreSQL interne au réseau Docker |
+| `DB_DATABASE` | `wacdo_dev` | Nom de la base de données locale |
+| `DB_USERNAME` | `wacdo` | Compte PostgreSQL utilisé par l'application |
+| `DB_PASSWORD` | secret local non versionné | Mot de passe du compte PostgreSQL |
+| `SESSION_DRIVER` | `file` | Stockage local des sessions Laravel |
+
+La variable `APP_KEY` est générée par Laravel lors de l'initialisation locale. Elle ne doit jamais être versionnée.
+
+### 10.4 Volumes, ports et données de travail
+
+Le code source du projet est partagé entre l'hôte et les conteneurs applicatifs par montage de volume. Les données PostgreSQL sont conservées dans un volume nommé dédié au service `db`.
+
+L'application web est exposée sur le port HTTP local `8080` afin de permettre l'accès au back-office depuis un navigateur. PostgreSQL n'est pas exposé sur la machine hôte. Il reste accessible uniquement sur le réseau Docker interne.
+
+Les répertoires Laravel `storage/` et `bootstrap/cache/` doivent rester accessibles en écriture par le conteneur `app`, car ils portent les logs, les caches et les fichiers temporaires nécessaires au framework.
+
+Les fichiers `.env`, les dumps de base, les données locales de démonstration et les éventuels secrets ne doivent pas être suivis par Git. Les données de production ne doivent pas être utilisées dans l'environnement local.
+
+### 10.5 Initialisation et démarrage
+
+Le démarrage local suit la logique suivante :
+
+1. préparer le fichier `.env` local ;
+2. démarrer les services Docker Compose ;
+3. installer les dépendances PHP avec Composer dans le conteneur `app` ;
+4. générer la clé d'application Laravel ;
+5. exécuter les migrations ;
+6. créer le premier collaborateur administrateur via un seeder utilisant `Hash::make` ;
+7. charger les données minimales de démonstration via les seeders ;
+8. vérifier l'accès au back-office dans le navigateur.
+
+Procédure de lancement retenue :
+
+```bash
+cp .env.example .env
+docker compose up -d --build
+docker compose exec app composer install
+docker compose exec app php artisan key:generate
+docker compose exec app php artisan migrate
+docker compose exec app php artisan db:seed
+docker compose logs -f app
+```
+
+L'initialisation de la base est réalisée par les migrations Laravel. Les données de démonstration sont chargées par les seeders Laravel. Le premier compte administrateur est créé par un seeder applicatif afin de rendre la connexion possible dès la fin du Sprint 0. Aucune initialisation manuelle par script SQL n'est retenue dans le Bloc 3.
+
+La réinitialisation locale s'effectue par suppression du volume PostgreSQL local puis par réexécution des migrations et des seeders.
+
+### 10.6 Vérifications locales minimales
+
+Après démarrage de l'environnement, les vérifications minimales sont les suivantes :
+
+- le back-office est accessible depuis le navigateur via l'URL locale ;
+- la page de connexion s'affiche sans erreur ;
+- la connexion avec un compte administrateur de développement fonctionne ;
+- PostgreSQL est accessible depuis Laravel ;
+- les migrations ont bien créé les quatre tables métier ;
+- les listes restaurants, collaborateurs, fonctions et affectations sont atteignables après authentification.
+
+Ces vérifications ne remplacent pas la stratégie de tests détaillée dans le projet. Elles servent uniquement à confirmer que l'environnement local est correctement lancé.
+
+### 10.7 Outils complémentaires
+
+En complément de Docker, l'environnement de développement suppose l'usage des outils suivants :
+
+- Docker Engine et Docker Compose ;
+- Git pour le versionnement du code source ;
+- Visual Studio Code ;
+- un navigateur web moderne pour tester le back-office ;
+- un terminal shell pour lancer Docker, Composer et Artisan.
+
+## 11 Déploiement
+
+Le déploiement cible du projet est un déploiement sur VPS Linux, fondé sur Docker et Docker Compose. Aucune installation manuelle de PHP, Nginx ou PostgreSQL sur l'hôte n'est requise : tous les services s'exécutent dans des conteneurs.
+
+### 11.1 Prérequis système
+
+Le déploiement nécessite les composants suivants sur la machine hôte :
+
+| Composant | Version minimale | Rôle |
+|---|---|---|
+| Docker Engine | 24.x | Moteur de conteneurisation |
+| Docker Compose | 2.x | Orchestration des services `app`, `web` et `db` |
+| Git | version récente | Récupération du code source |
+| `curl` | présent nativement sur Linux | Vérification HTTP post-déploiement |
+
+L'installation de PHP, de Composer, de Nginx ou de PostgreSQL sur la machine hôte n'est pas requise. Ces dépendances sont encapsulées dans les images Docker définies dans `docker-compose.yml`.
+
+### 11.2 Composition des conteneurs de production
+
+Le service `app` repose sur une image PHP 8.3-FPM contenant Laravel, Composer et les extensions PHP nécessaires.
+
+Le service `web` repose sur une image Nginx configurée pour :
+
+- servir uniquement le dossier `public/` ;
+- transmettre les scripts PHP au service `app` ;
+- ne jamais exposer le code source ou le fichier `.env`.
+
+Le service `db` repose sur l'image officielle PostgreSQL 16. Les données sont conservées dans un volume Docker dédié.
+
+Le projet ne retient aucun service Redis, Node, queue worker séparé ou service de mail dédié, car ils ne sont pas nécessaires au périmètre Bloc 3.
+
+### 11.3 Procédure de déploiement
+
+La procédure complète de premier déploiement est la suivante. Elle s'applique sur un serveur Linux recevant le projet.
+
+**Étape 1 — Récupérer le code source**
+
+```bash
+git clone <url-du-depot> wacdo-bloc3
+cd wacdo-bloc3
+```
+
+**Étape 2 — Configurer les variables d'environnement**
+
+```bash
+cp .env.example .env
+```
+
+Le fichier `.env` est ensuite renseigné avec les valeurs de production, notamment :
+
+- `APP_ENV=production` ;
+- `APP_DEBUG=false` ;
+- l'URL réelle de l'application ;
+- les identifiants PostgreSQL ;
+- la configuration de session.
+
+**Étape 3 — Démarrer les conteneurs**
+
+```bash
+docker compose up -d --build
+```
+
+**Étape 4 — Installer les dépendances applicatives**
+
+```bash
+docker compose exec app composer install --no-dev --optimize-autoloader
+```
+
+**Étape 5 — Générer la clé d'application**
+
+```bash
+docker compose exec app php artisan key:generate --force
+```
+
+**Étape 6 — Exécuter les migrations**
+
+```bash
+docker compose exec app php artisan migrate --force
+```
+
+**Étape 7 — Charger le premier administrateur et les données minimales si nécessaire**
+
+```bash
+docker compose exec app php artisan db:seed --force
+```
+
+Le seeding de production reste limité aux données nécessaires à la démonstration et au premier accès administrateur. Le mot de passe du compte administrateur est haché par Laravel au moment de l'insertion.
+
+**Étape 8 — Optimiser le framework pour la production**
+
+```bash
+docker compose exec app php artisan config:cache
+docker compose exec app php artisan route:cache
+docker compose exec app php artisan view:cache
+```
+
+Le déploiement retient les migrations Laravel comme procédure normale d'évolution du schéma. Aucune exécution manuelle de scripts SQL n'est retenue.
+
+### 11.4 Variables d'environnement de déploiement
+
+Variables côté application Laravel :
+
+| Variable | Valeur attendue | Obligatoire |
+|---|---|---|
+| `APP_ENV` | `production` sur le serveur | Oui |
+| `APP_KEY` | secret d'application généré | Oui |
+| `APP_DEBUG` | `false` en production | Oui |
+| `APP_URL` | URL réelle d'accès au back-office | Oui |
+| `APP_PORT` | port HTTP exposé par Docker | Oui |
+| `DB_CONNECTION` | `pgsql` | Oui |
+| `DB_HOST` | `db` | Oui |
+| `DB_PORT` | `5432` | Oui |
+| `DB_DATABASE` | base utilisée en production | Oui |
+| `DB_USERNAME` | compte PostgreSQL applicatif | Oui |
+| `DB_PASSWORD` | secret non versionné | Oui |
+| `SESSION_DRIVER` | `file` | Oui |
+
+Variables côté conteneur PostgreSQL :
+
+| Variable Docker | Valeur | Obligatoire |
+|---|---|---|
+| `POSTGRES_DB` | base créée au premier démarrage | Oui |
+| `POSTGRES_USER` | compte PostgreSQL applicatif | Oui |
+| `POSTGRES_PASSWORD` | mot de passe du compte | Oui |
+
+Le fichier `.env` n'est jamais versionné. Seul `.env.example` sert de référence de configuration.
+
+### 11.5 Contrôle post-déploiement
+
+Après chaque déploiement, les vérifications minimales suivantes sont effectuées :
+
+```bash
+docker compose ps
+docker compose exec app php artisan migrate:status
+curl -s -o /dev/null -w "%{http_code}" http://localhost:${APP_PORT:-8080}/login
+```
+
+Le déploiement est considéré comme valide lorsque :
+
+- les services `app`, `web` et `db` sont démarrés ;
+- les migrations sont appliquées sans erreur ;
+- la page de connexion répond avec un code HTTP 200 ;
+- un compte administrateur de test peut se connecter ;
+- aucune page de debug ou erreur technique sensible n'est exposée.
+
+### 11.6 Réinitialisation et mise à jour du schéma
+
+En cas de réinitialisation complète, la base peut être recréée en supprimant le volume PostgreSQL puis en réexécutant la procédure de migration et de seeding.
+
+En cours de développement ou lors d'une évolution normale du schéma, la méthode retenue n'est pas la recréation systématique par SQL brut, mais l'application des migrations Laravel incrémentales. Ce point distingue clairement le Bloc 3 du Bloc 2.
+
+## 12 Conventions de développement
+
+Le développement du projet suit des conventions simples afin de garder un code lisible, cohérent et facile à maintenir pendant la réalisation et lors de la soutenance.
+
+### 12.1 Principes généraux
+
+- le projet est développé sous Laravel 11 avec une architecture MVC monolithique ;
+- les conventions natives du framework sont privilégiées avant toute surcouche personnalisée ;
+- chaque couche conserve une responsabilité claire ;
+- le code reste simple, lisible et limité aux besoins du Bloc 3 ;
+- toute duplication de logique doit être évitée ou factorisée ;
+- une couche de service n'est introduite que lorsqu'une vraie logique métier transverse le justifie, en l'occurrence `AffectationService`.
+
+### 12.2 Règles de nommage
+
+- les classes sont nommées en PascalCase ;
+- les contrôleurs se terminent par `Controller` ;
+- les Form Requests se terminent par `Request` ;
+- les services se terminent par `Service` ;
+- les modèles Eloquent portent un nom métier au singulier ;
+- les méthodes et les variables sont nommées en camelCase ;
+- les constantes sont nommées en majuscules avec underscore ;
+- les vues Blade utilisent des noms explicites par ressource et par action ;
+- les migrations suivent la convention Laravel `create_xxx_table` ou `add_xxx_to_xxx_table`.
+- les clés primaires des tables sont nommées `id` ;
+- les clés étrangères suivent la convention Laravel `collaborateur_id`, `restaurant_id` et `fonction_id`.
+
+### 12.3 Répartition des responsabilités
+
+- les contrôleurs reçoivent la requête, déclenchent le traitement adapté et préparent la réponse ;
+- les Form Requests portent la validation des formulaires ;
+- `AffectationService` porte la logique métier transverse propre aux affectations ;
+- les modèles Eloquent centralisent les relations et l'accès aux données ;
+- les middlewares gèrent l'authentification et le contrôle administrateur ;
+- les vues Blade se limitent à l'affichage HTML ;
+- aucune requête SQL n'est écrite dans les vues ;
+- aucune couche repository supplémentaire n'est retenue.
+
+### 12.4 Règles de qualité et de sécurité
+
+- toute donnée reçue est validée côté serveur ;
+- les accès aux données passent par Eloquent ou Query Builder ;
+- aucun secret n'est écrit en dur dans le code source ;
+- les messages d'erreur techniques ne sont pas affichés à l'utilisateur final en production ;
+- les contrôles d'autorisation sont systématiquement réalisés côté serveur ;
+- les champs sensibles sont protégés contre l'affectation massive ;
+- les règles métier d'affectation restent centralisées et ne sont pas dupliquées dans plusieurs contrôleurs.
+
+### 12.5 Formatage minimal
+
+- l'indentation retenue est de 4 espaces ;
+- l'encodage des fichiers texte est UTF-8 ;
+- le code PHP suit l'esprit de PSR-12 ;
+- les commentaires sont ajoutés uniquement lorsqu'ils apportent une information utile ;
+- les méthodes restent courtes et centrées sur une seule responsabilité ;
+- le code inutilisé est supprimé avant livraison.
+
+## 13 Plan de développement par sprints
+
+Le développement est découpé en sprints courts et progressifs. Le Sprint 0 sert à installer et stabiliser le socle technique. Les sprints suivants ajoutent les fonctionnalités dans l'ordre le plus simple à tester : base de données, authentification, référentiels, affectations, recherches, puis livraison.
+
+### Sprint 0 — Mise en place technique
+
+Objectif : disposer d'un projet Laravel 11 exécutable localement.
+
+Travaux à réaliser :
+
+- installer Laravel 11 ;
+- mettre en place Docker Compose avec les services `app`, `web` et `db` ;
+- configurer PHP 8.3, Nginx, PHP-FPM et PostgreSQL ;
+- créer le fichier `.env.example` et préparer le `.env` local ;
+- vérifier la connexion Laravel vers PostgreSQL ;
+- préparer la structure des dossiers applicatifs ;
+- créer le seeder du premier collaborateur administrateur avec `Hash::make` ;
+- lancer une première commande de migration et de seeding.
+
+Critère de fin : le projet démarre en local, la page de connexion est accessible et un compte administrateur de développement peut être créé par seeder.
+
+### Sprint 1 — Schéma BDD et modèles Eloquent
+
+Objectif : créer la structure relationnelle stable du projet.
+
+Travaux à réaliser :
+
+- écrire les migrations des tables `collaborateurs`, `restaurants`, `fonctions` et `affectations` ;
+- utiliser les clés primaires `id` et les clés étrangères `collaborateur_id`, `restaurant_id`, `fonction_id` ;
+- ajouter les contraintes d'unicité sur `email` et `intitule_poste` ;
+- ajouter la contrainte `date_fin IS NULL OR date_fin >= date_debut` ;
+- ajouter l'index unique strict PostgreSQL avec `NULLS NOT DISTINCT` ;
+- créer les modèles Eloquent et leurs relations ;
+- ajouter les casts nécessaires sur les dates et les booléens.
+
+Critère de fin : les migrations s'exécutent sans erreur, les tables sont créées et les relations Eloquent sont prêtes.
+
+### Sprint 2 — Authentification et contrôle administrateur
+
+Objectif : sécuriser l'accès à l'application avant de coder les écrans métier.
+
+Travaux à réaliser :
+
+- créer le modèle `Collaborateur` authentifiable ;
+- coder le formulaire de connexion ;
+- utiliser Laravel pour vérifier le mot de passe haché ;
+- coder la déconnexion ;
+- créer le middleware `EnsureUserIsAdmin` ;
+- protéger toutes les routes métier ;
+- tester le refus des visiteurs non authentifiés et des collaborateurs non administrateurs.
+
+Critère de fin : seul un collaborateur administrateur authentifié accède au back-office.
+
+### Sprint 3 — CRUD des référentiels
+
+Objectif : développer les écrans simples avant les affectations.
+
+Travaux à réaliser :
+
+- coder la gestion des fonctions ;
+- coder la gestion des restaurants ;
+- coder la gestion des collaborateurs ;
+- créer les Form Requests de validation ;
+- mettre en place les vues Blade de liste, création, détail et modification ;
+- ajouter les recherches simples sur restaurants et collaborateurs.
+
+Critère de fin : les trois référentiels sont consultables, créables, modifiables et validés côté serveur.
+
+### Sprint 4 — Gestion des affectations
+
+Objectif : coder le cœur métier du projet.
+
+Travaux à réaliser :
+
+- créer le formulaire unique de création d'affectation ;
+- permettre la création depuis une fiche collaborateur ou restaurant ;
+- coder `AffectationService` ;
+- refuser les doublons stricts ;
+- vérifier la cohérence des dates ;
+- permettre la modification d'une affectation en cours ;
+- calculer les états en cours, future et terminée sans les stocker en base.
+
+Critère de fin : une affectation peut être créée et modifiée selon les règles métier, sans doublon strict ni incohérence de dates.
+
+### Sprint 5 — Recherches, détails et historiques
+
+Objectif : rendre l'application réellement exploitable par l'administrateur.
+
+Travaux à réaliser :
+
+- coder la recherche transversale des affectations ;
+- afficher les affectations en cours sur les fiches restaurant et collaborateur ;
+- afficher l'historique des affectations ;
+- ajouter les filtres par fonction, nom, ville et dates ;
+- coder la vue des collaborateurs non affectés ;
+- utiliser les scopes Eloquent prévus pour éviter la duplication de requêtes.
+
+Critère de fin : toutes les recherches demandées par le référentiel sont disponibles dans le back-office.
+
+### Sprint 6 — Tests, sécurité et durcissement
+
+Objectif : vérifier que l'application respecte les règles métier et les exigences de sécurité.
+
+Travaux à réaliser :
+
+- tester l'authentification administrateur ;
+- tester le refus des accès non autorisés ;
+- tester les validations de formulaires ;
+- tester les règles d'affectation ;
+- tester le refus d'un doublon strict ;
+- tester les filtres principaux ;
+- vérifier la protection CSRF et l'absence de mot de passe en clair.
+
+Critère de fin : les parcours critiques sont couverts par des tests fonctionnels et de sécurité.
+
+### Sprint 7 — Déploiement et préparation soutenance
+
+Objectif : livrer une application démontrable et défendable devant jury.
+
+Travaux à réaliser :
+
+- préparer l'environnement de production Docker Compose ;
+- exécuter les migrations et seeders sur le serveur ;
+- vérifier les variables d'environnement de production ;
+- désactiver le mode debug ;
+- préparer les données de démonstration ;
+- contrôler l'alignement entre l'application, le CDC et le schéma BDD ;
+- préparer les explications sur Laravel, MVC, Eloquent, Blade, sécurité et migrations.
+
+Critère de fin : l'application est déployée, testable, cohérente avec le CDC et prête pour la soutenance.

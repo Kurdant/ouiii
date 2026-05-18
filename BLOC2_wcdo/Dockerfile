@@ -6,7 +6,7 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN a2enmod rewrite
+RUN a2enmod rewrite headers
 
 COPY apache.conf /etc/apache2/sites-available/000-default.conf
 

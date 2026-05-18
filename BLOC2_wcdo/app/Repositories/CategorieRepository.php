@@ -146,7 +146,7 @@ final class CategorieRepository extends BaseRepository
             'id_categorie' => (int) $row['id_categorie'],
             'nom'          => (string) $row['nom'],
             'description'  => isset($row['description']) ? (string) $row['description'] : null,
-            'actif'        => $row['actif'] === 't',
+            'actif'        => ($row['actif'] === true || $row['actif'] === 't'),
         ];
     }
 }

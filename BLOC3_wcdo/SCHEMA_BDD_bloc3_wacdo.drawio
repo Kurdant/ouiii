@@ -17,19 +17,19 @@
           <mxGeometry x="1030" y="88" width="470" height="156" as="geometry"/>
         </mxCell>
 
-        <mxCell id="collaborateurs" value="&lt;b&gt;collaborateurs&lt;/b&gt;&lt;hr&gt;&lt;b&gt;PK&lt;/b&gt; id_collaborateur&lt;br&gt;nom&lt;br&gt;prenom&lt;br&gt;&lt;b&gt;UQ&lt;/b&gt; email&lt;br&gt;telephone NULL&lt;br&gt;date_premiere_embauche&lt;br&gt;administrateur&lt;br&gt;mot_de_passe_hash NULL" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eaf1f8;strokeColor=#6b7f99;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;fontFamily=Helvetica;fontSize=12;fontColor=#172033;" vertex="1" parent="1">
+        <mxCell id="collaborateurs" value="&lt;b&gt;collaborateurs&lt;/b&gt;&lt;hr&gt;&lt;b&gt;PK&lt;/b&gt; id&lt;br&gt;nom&lt;br&gt;prenom&lt;br&gt;&lt;b&gt;UQ&lt;/b&gt; email&lt;br&gt;telephone NULL&lt;br&gt;date_premiere_embauche&lt;br&gt;administrateur&lt;br&gt;password NULL" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eaf1f8;strokeColor=#6b7f99;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;fontFamily=Helvetica;fontSize=12;fontColor=#172033;" vertex="1" parent="1">
           <mxGeometry x="90" y="304" width="340" height="238" as="geometry"/>
         </mxCell>
 
-        <mxCell id="restaurants" value="&lt;b&gt;restaurants&lt;/b&gt;&lt;hr&gt;&lt;b&gt;PK&lt;/b&gt; id_restaurant&lt;br&gt;nom&lt;br&gt;adresse&lt;br&gt;code_postal&lt;br&gt;ville" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eaf1f8;strokeColor=#6b7f99;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;fontFamily=Helvetica;fontSize=12;fontColor=#172033;" vertex="1" parent="1">
+        <mxCell id="restaurants" value="&lt;b&gt;restaurants&lt;/b&gt;&lt;hr&gt;&lt;b&gt;PK&lt;/b&gt; id&lt;br&gt;nom&lt;br&gt;adresse&lt;br&gt;code_postal&lt;br&gt;ville" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eaf1f8;strokeColor=#6b7f99;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;fontFamily=Helvetica;fontSize=12;fontColor=#172033;" vertex="1" parent="1">
           <mxGeometry x="1170" y="326" width="340" height="176" as="geometry"/>
         </mxCell>
 
-        <mxCell id="fonctions" value="&lt;b&gt;fonctions&lt;/b&gt;&lt;hr&gt;&lt;b&gt;PK&lt;/b&gt; id_fonction&lt;br&gt;&lt;b&gt;UQ&lt;/b&gt; intitule_poste" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eaf1f8;strokeColor=#6b7f99;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;fontFamily=Helvetica;fontSize=12;fontColor=#172033;" vertex="1" parent="1">
+        <mxCell id="fonctions" value="&lt;b&gt;fonctions&lt;/b&gt;&lt;hr&gt;&lt;b&gt;PK&lt;/b&gt; id&lt;br&gt;&lt;b&gt;UQ&lt;/b&gt; intitule_poste" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eaf1f8;strokeColor=#6b7f99;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;fontFamily=Helvetica;fontSize=12;fontColor=#172033;" vertex="1" parent="1">
           <mxGeometry x="630" y="666" width="340" height="112" as="geometry"/>
         </mxCell>
 
-        <mxCell id="affectations" value="&lt;b&gt;affectations&lt;/b&gt;&lt;hr&gt;&lt;b&gt;PK&lt;/b&gt; id_affectation&lt;br&gt;&lt;b&gt;FK&lt;/b&gt; id_collaborateur&lt;br&gt;&lt;b&gt;FK&lt;/b&gt; id_restaurant&lt;br&gt;&lt;b&gt;FK&lt;/b&gt; id_fonction&lt;br&gt;date_debut&lt;br&gt;date_fin NULL" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fde7c3;strokeColor=#c58b27;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;fontFamily=Helvetica;fontSize=12;fontStyle=1;fontColor=#172033;" vertex="1" parent="1">
+        <mxCell id="affectations" value="&lt;b&gt;affectations&lt;/b&gt;&lt;hr&gt;&lt;b&gt;PK&lt;/b&gt; id&lt;br&gt;&lt;b&gt;FK&lt;/b&gt; collaborateur_id&lt;br&gt;&lt;b&gt;FK&lt;/b&gt; restaurant_id&lt;br&gt;&lt;b&gt;FK&lt;/b&gt; fonction_id&lt;br&gt;date_debut&lt;br&gt;date_fin NULL" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fde7c3;strokeColor=#c58b27;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;fontFamily=Helvetica;fontSize=12;fontStyle=1;fontColor=#172033;" vertex="1" parent="1">
           <mxGeometry x="625" y="300" width="350" height="214" as="geometry"/>
         </mxCell>
 

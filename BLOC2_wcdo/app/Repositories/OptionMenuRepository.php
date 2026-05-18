@@ -106,8 +106,8 @@ final class OptionMenuRepository extends BaseRepository
             'produit_nom'     => (string) $row['produit_nom'],
             'produit_prix'    => (float) $row['produit_prix'],
             'supplement_prix' => (float) $row['supplement_prix'],
-            'disponible'      => $row['disponible'] === 't',
-            'actif'           => $row['actif'] === 't',
+            'disponible'      => ($row['disponible'] === true || $row['disponible'] === 't'),
+            'actif'           => ($row['actif'] === true || $row['actif'] === 't'),
         ];
     }
 }

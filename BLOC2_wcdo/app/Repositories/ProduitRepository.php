@@ -213,8 +213,8 @@ final class ProduitRepository extends BaseRepository
             'description'       => (string) $row['description'],
             'prix'              => (float) $row['prix'],
             'image'             => (string) $row['image'],
-            'disponible'        => $row['disponible'] === 't',
-            'actif'             => $row['actif'] === 't',
+            'disponible'        => ($row['disponible'] === true || $row['disponible'] === 't'),
+            'actif'             => ($row['actif'] === true || $row['actif'] === 't'),
             'date_creation'     => (string) $row['date_creation'],
             'date_modification' => isset($row['date_modification']) ? (string) $row['date_modification'] : null,
         ];

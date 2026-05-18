@@ -61,6 +61,16 @@ $router->post('/options/{id}/desactiver', 'App\Controllers\OptionMenuController:
 $router->get('/commandes',                'App\Controllers\CommandeController::index');
 $router->get('/commandes/creer',          'App\Controllers\CommandeController::create');
 $router->post('/commandes',               'App\Controllers\CommandeController::store');
+$router->get('/commandes/livraison',      'App\Controllers\CommandeController::livraisonForm');
+$router->post('/commandes/livraison',     'App\Controllers\CommandeController::livraisonParNumero');
 $router->get('/commandes/{id}',           'App\Controllers\CommandeController::show');
 $router->post('/commandes/{id}/preparee', 'App\Controllers\CommandeController::marquerPreparee');
 $router->post('/commandes/{id}/livree',   'App\Controllers\CommandeController::marquerLivree');
+
+// -----------------------------------------------------------------------------
+// API REST (auth par X-API-Key, JSON strict, sans session, sans CSRF).
+// Réutilise CommandeService pour garantir l'unicité des règles métier (CDC §3).
+// -----------------------------------------------------------------------------
+$router->get('/api/catalogue',  'App\Controllers\Api\CatalogueController::index');
+$router->post('/api/commandes', 'App\Controllers\Api\CommandeController::store');
+$router->get('/api/commandes/{numero}', 'App\Controllers\Api\CommandeController::show');

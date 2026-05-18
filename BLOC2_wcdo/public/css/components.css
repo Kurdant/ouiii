@@ -199,3 +199,447 @@
     padding-bottom: var(--space-sm);
     border-bottom: 1px solid var(--color-border);
 }
+
+/* ============================================================
+ * Sprint 10 — composants UI globale
+ * ============================================================ */
+
+/* Badge informatif (rôle utilisateur dans le header) */
+.badge-info {
+    background: var(--color-info);
+    color: #ffffff;
+}
+
+/* En-tête de page (titre + sous-titre) */
+.page-header {
+    margin-bottom: var(--space-xl);
+}
+.page-header h2 {
+    margin: 0 0 var(--space-sm) 0;
+    font-size: 1.6rem;
+}
+.page-subtitle {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* Dashboard — grille de compteurs */
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+}
+.stat-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+.stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    font-weight: 500;
+}
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+/* Dashboard — raccourcis */
+.dashboard-shortcuts h3 {
+    margin-bottom: var(--space-md);
+}
+.dashboard-shortcuts ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-md);
+}
+.dashboard-shortcuts li a {
+    display: block;
+    padding: var(--space-md);
+    background: var(--color-primary);
+    color: #ffffff;
+    border-radius: var(--radius);
+    text-align: center;
+    text-decoration: none;
+}
+.dashboard-shortcuts li a:hover {
+    background: var(--color-primary-dk);
+    text-decoration: none;
+}
+
+/* Fil d'ariane */
+.breadcrumb {
+    margin-bottom: var(--space-lg);
+}
+.breadcrumb ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    font-size: var(--font-size-sm);
+}
+.breadcrumb li + li::before {
+    content: "/";
+    margin-right: var(--space-sm);
+    color: var(--color-text-muted);
+}
+.breadcrumb a {
+    color: var(--color-primary);
+}
+.breadcrumb [aria-current="page"] {
+    color: var(--color-text-muted);
+}
+
+/* =========================================================================
+   Sprint 12 — Refonte UX page création commande
+   ========================================================================= */
+
+.order-form { display: block; }
+
+/* Type de service : 2 grosses cartes radio --------------------------------- */
+.service-toggle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.service-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    background: #fff;
+    border: 2px solid var(--color-border, #ddd);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    user-select: none;
+}
+.service-card:hover { border-color: var(--color-primary, #d62300); }
+.service-card.is-selected {
+    border-color: var(--color-primary, #d62300);
+    background: #fff5f2;
+}
+.service-card input[type="radio"] { position: absolute; opacity: 0; }
+.service-icon { font-size: 2.5rem; line-height: 1; }
+.service-label { font-weight: 600; font-size: 1.1rem; }
+
+/* Layout 2 colonnes (contenu + panier) ------------------------------------- */
+.order-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 1.5rem;
+    align-items: start;
+}
+.order-main { min-width: 0; }
+
+/* Onglets ------------------------------------------------------------------ */
+.tabs {
+    display: flex;
+    gap: 0.5rem;
+    border-bottom: 2px solid var(--color-border, #ddd);
+    margin-bottom: 1rem;
+}
+.tab {
+    background: none;
+    border: none;
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-muted, #666);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+}
+.tab:hover { color: var(--color-text, #222); }
+.tab.active {
+    color: var(--color-primary, #d62300);
+    border-bottom-color: var(--color-primary, #d62300);
+}
+
+/* Grille produits ---------------------------------------------------------- */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+.product-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: #fff;
+    border: 2px solid var(--color-border, #ddd);
+    border-radius: 10px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+.product-card.is-active {
+    border-color: var(--color-primary, #d62300);
+    box-shadow: 0 2px 8px rgba(214, 35, 0, 0.15);
+}
+.product-name { margin: 0; font-size: 1rem; font-weight: 600; }
+.product-price { color: var(--color-text-muted, #666); font-weight: 600; }
+
+/* Compteur [−][N][+] tactile ----------------------------------------------- */
+.counter {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    border: 1px solid var(--color-border, #ddd);
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+}
+.counter-btn {
+    width: 44px;
+    height: 44px;
+    background: #f5f5f5;
+    border: none;
+    font-size: 1.25rem;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--color-text, #222);
+    transition: background 0.1s;
+}
+.counter-btn:hover { background: #e8e8e8; }
+.counter-btn:active { background: #d8d8d8; }
+.counter-value {
+    min-width: 44px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0 0.5rem;
+}
+
+/* Menus dépliables --------------------------------------------------------- */
+.menu-list { display: flex; flex-direction: column; gap: 0.75rem; }
+.menu-block {
+    background: #fff;
+    border: 2px solid var(--color-border, #ddd);
+    border-radius: 10px;
+    overflow: hidden;
+}
+.menu-block.is-open { border-color: var(--color-primary, #d62300); }
+.menu-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    user-select: none;
+}
+.menu-title { flex: 1; min-width: 0; }
+.menu-title h3 { margin: 0; font-size: 1.1rem; }
+.menu-price { color: var(--color-text-muted, #666); font-weight: 600; }
+.menu-toggle {
+    font-size: 1rem;
+    transition: transform 0.15s;
+    color: var(--color-text-muted, #666);
+}
+.menu-block.is-open .menu-toggle { transform: rotate(180deg); }
+.menu-sections {
+    padding: 1rem;
+    border-top: 1px solid var(--color-border, #ddd);
+    background: #fafafa;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Sections d'un menu ------------------------------------------------------- */
+.section-block {
+    border: 1px solid var(--color-border, #ddd);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    background: #fff;
+}
+.section-block.is-invalid {
+    border-color: #c0392b;
+    background: #fdecea;
+}
+.section-block legend {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 0.5rem;
+    font-weight: 600;
+}
+.section-name { font-size: 1rem; }
+.section-hint { color: var(--color-text-muted, #666); font-weight: 400; font-size: 0.85rem; }
+
+.badge {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+.badge-required { background: #c0392b; color: #fff; }
+.badge-optional { background: #e8e8e8; color: #555; }
+
+/* Options en pastilles cliquables ------------------------------------------ */
+.option-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0.25rem 0.4rem 0.25rem 0;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--color-border, #ddd);
+    border-radius: 999px;
+    background: #fff;
+    cursor: pointer;
+    user-select: none;
+    transition: border-color 0.1s, background 0.1s;
+}
+.option-chip:hover { border-color: var(--color-primary, #d62300); }
+.option-chip input { margin: 0; }
+.option-chip input:checked + .option-label {
+    color: var(--color-primary, #d62300);
+    font-weight: 600;
+}
+.option-chip:has(input:checked) {
+    border-color: var(--color-primary, #d62300);
+    background: #fff5f2;
+}
+.option-supp { color: var(--color-text-muted, #666); font-size: 0.85rem; margin-left: 0.25rem; }
+
+/* Panier sticky ------------------------------------------------------------ */
+.cart-summary {
+    position: sticky;
+    top: 1rem;
+    background: #fff;
+    border: 2px solid var(--color-border, #ddd);
+    border-radius: 10px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.cart-title { margin: 0; font-size: 1.1rem; }
+.cart-items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    max-height: 280px;
+    overflow-y: auto;
+}
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    padding: 0.25rem 0;
+    border-bottom: 1px dashed #eee;
+}
+.cart-empty { color: var(--color-text-muted, #666); font-style: italic; }
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 0.5rem;
+    border-top: 2px solid var(--color-border, #ddd);
+    font-size: 1.1rem;
+}
+.cart-total-value { font-size: 1.4rem; color: var(--color-primary, #d62300); }
+.cart-count { margin: 0; font-size: 0.85rem; color: var(--color-text-muted, #666); }
+.cart-error { margin: 0; color: #c0392b; font-size: 0.85rem; font-weight: 600; }
+.btn-cta { width: 100%; padding: 0.85rem; font-size: 1rem; font-weight: 700; }
+.btn-cta[disabled] { opacity: 0.5; cursor: not-allowed; }
+.btn-block { display: block; width: 100%; text-align: center; }
+
+.hidden { display: none !important; }
+
+/* Responsive --------------------------------------------------------------- */
+@media (max-width: 900px) {
+    .order-layout { grid-template-columns: 1fr; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+    .cart-summary { position: static; }
+}
+@media (max-width: 500px) {
+    .product-grid { grid-template-columns: 1fr; }
+    .service-toggle { grid-template-columns: 1fr; }
+}
+
+/* =========================================================================
+   Sprint 12b — Menus par instances
+   ========================================================================= */
+
+.menu-add-row {
+    padding: 0.75rem 1rem;
+    border-top: 1px solid var(--color-border, #ddd);
+}
+.btn-add-menu {
+    display: block;
+    width: 100%;
+    padding: 0.65rem 1rem;
+    background: var(--color-primary, #d62300);
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.btn-add-menu:hover { background: #b51d00; }
+.btn-add-menu:active { background: #9a1800; }
+
+.menu-instances {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0 1rem;
+}
+.menu-instances:empty { display: none; }
+
+.menu-instance {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: #f0faf0;
+    border: 1px solid #a8d5a8;
+    border-radius: 8px;
+    margin-bottom: 0.25rem;
+}
+.menu-instance-hidden { display: none; }
+.menu-instance-label {
+    flex: 1;
+    font-size: 0.9rem;
+    color: #2d6a2d;
+    font-weight: 500;
+}
+.menu-instance-remove {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    background: none;
+    border: 1px solid #c0392b;
+    border-radius: 50%;
+    color: #c0392b;
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.1s, color 0.1s;
+}
+.menu-instance-remove:hover { background: #c0392b; color: #fff; }

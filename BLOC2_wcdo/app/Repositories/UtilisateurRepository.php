@@ -171,7 +171,7 @@ final class UtilisateurRepository extends BaseRepository
             'identifiant'    => (string) $user['identifiant'],
             'nom'            => (string) $user['nom'],
             'prenom'         => (string) $user['prenom'],
-            'actif'          => $user['actif'] === 't',
+            'actif'          => ($user['actif'] === true || $user['actif'] === 't'),
             'id_role'        => (int) $user['id_role'],
             'role'           => (string) $user['role'],
         ];
@@ -345,7 +345,7 @@ final class UtilisateurRepository extends BaseRepository
             'identifiant'    => (string) $user['identifiant'],
             'nom'            => (string) $user['nom'],
             'prenom'         => (string) $user['prenom'],
-            'actif'          => $user['actif'] === 't',
+            'actif'          => ($user['actif'] === true || $user['actif'] === 't'),
             'role'           => (string) $user['role'],
         ];
     }

@@ -20,42 +20,9 @@ $extraCss = $extraCss ?? [];
 </head>
 <body>
 <div class="site-wrapper">
-    <header class="site-header">
-        <h1>Wacdo</h1>
-        <?php if (!empty($_SESSION['user'])): ?>
-        <div class="header-user">
-            <?= htmlspecialchars($_SESSION['user']['identifiant'] ?? '', ENT_QUOTES, 'UTF-8') ?>
-            <form method="POST" action="/logout" style="display:inline">
-                <input type="hidden" name="_csrf"
-                       value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
-                <button type="submit" class="btn btn-secondary btn-sm">Déconnexion</button>
-            </form>
-        </div>
-        <?php endif; ?>
-    </header>
+    <?php include __DIR__ . '/partials/header.php'; ?>
 
-    <aside class="site-sidebar">
-        <nav aria-label="Navigation principale">
-            <ul>
-                <li class="nav-section">Commandes</li>
-                <li><a href="/commandes">Liste des commandes</a></li>
-
-                <li class="nav-section">Catalogue</li>
-                <?php if (($_SESSION['user']['role'] ?? '') === 'Administration'): ?>
-                <li><a href="/produits">Produits</a></li>
-                <li><a href="/categories">Catégories</a></li>
-                <?php endif; ?>
-
-                <li class="nav-section">Gestion</li>
-                <?php if (($_SESSION['user']['role'] ?? '') === 'Administration'): ?>
-                <li><a href="/utilisateurs">Utilisateurs</a></li>
-                <?php endif; ?>
-
-                <li class="nav-section">Mon compte</li>
-                <li><a href="/mon-compte/mot-de-passe">Changer mon mot de passe</a></li>
-            </ul>
-        </nav>
-    </aside>
+    <?php include __DIR__ . '/partials/sidebar.php'; ?>
 
     <main class="site-main">
         <?= $content ?>

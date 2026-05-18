@@ -65,6 +65,57 @@ final class CommandeRepository extends BaseRepository
     }
 
     /**
+     * Retourne une commande par son numéro de retrait, ou null si introuvable.
+     * Utilisé par le rôle Accueil pour identifier la commande lors de la livraison.
+     *
+     * @return array<string, mixed>|null
+     */
+    public function findByNumeroRetrait(string $numeroRetrait): ?array
+    {
+        $statement = $this->pdo->prepare(
+            'SELECT
+                c.id_commande, c.numero_retrait, c.source, c.type_service,
+                c.statut, c.total, c.date_commande, c.date_heure_retrait_prevue,
+                c.date_preparation, c.date_livraison, c.id_utilisateur_auteur,
+                u.identifiant AS auteur_identifiant
+             FROM commandes c
+             LEFT JOIN utilisateurs u ON u.id_utilisateur = c.id_utilisateur_auteur
+             WHERE c.numero_retrait = :numero
+             ORDER BY c.date_commande DESC
+             LIMIT 1'
+        );
+        $statement->execute(['numero' => $numeroRetrait]);
+        $row = $statement->fetch();
+
+        return is_array($row) ? $this->normalizeCommande($row) : null;
+    }
+
+    /**
+     * Retourne les commandes au statut `a_preparer` triées par heure de retrait
+     * prévue croissante (NULLs en fin), puis par date de commande croissante.
+     * Utilisé par le rôle Préparation conformément au CDC §3.
+     *
+     * @return list<array<string, mixed>>
+     */
+    public function findAPreparer(): array
+    {
+        $statement = $this->pdo->prepare(
+            "SELECT
+                c.id_commande, c.numero_retrait, c.source, c.type_service,
+                c.statut, c.total, c.date_commande, c.date_heure_retrait_prevue,
+                c.date_preparation, c.date_livraison,
+                u.identifiant AS auteur_identifiant
+             FROM commandes c
+             LEFT JOIN utilisateurs u ON u.id_utilisateur = c.id_utilisateur_auteur
+             WHERE c.statut = 'a_preparer'
+             ORDER BY c.date_heure_retrait_prevue ASC NULLS LAST, c.date_commande ASC"
+        );
+        $statement->execute();
+
+        return array_map([$this, 'normalizeCommande'], $statement->fetchAll());
+    }
+
+    /**
      * Retourne une commande complète avec ses lignes et choix de personnalisation.
      *
      * Structure retournée :
