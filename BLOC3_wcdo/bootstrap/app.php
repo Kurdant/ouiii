@@ -17,6 +17,11 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // Redirige les invités vers /login pour toute route protégée.
         $middleware->redirectGuestsTo(fn () => route('login'));
+
+        // Trust Traefik/nginx en frontal : récupère scheme/host/IP via X-Forwarded-*.
+        // Sans cette ligne, Laravel génère des URLs en http:// derrière un proxy HTTPS.
+        // PHP-FPM n'est joignable que depuis le réseau interne Docker → '*' est sûr.
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
